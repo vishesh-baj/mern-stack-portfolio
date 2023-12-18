@@ -88,9 +88,12 @@ const RegisterPage = () => {
                 <p className="text-red-400">{errors.password?.message}</p>
               )}
               <label className="label">
-                <a href="#" className="label-text-alt link link-hover">
+                <Link
+                  to={PATHS.forgotPassword}
+                  className="label-text-alt link link-hover"
+                >
                   Forgot password?
-                </a>
+                </Link>
                 <Link
                   to={PATHS.login}
                   className="label-text-alt link link-hover"

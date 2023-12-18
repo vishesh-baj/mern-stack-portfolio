@@ -1,6 +1,38 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { PATHS } from "../routes/paths";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { loginSchema } from "../validations";
+import { useMutation } from "react-query";
+import { API_INSTANCE } from "../api";
+import toast from "react-hot-toast";
 const LoginPage = () => {
+  const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ resolver: yupResolver(loginSchema) });
+
+  const mutation = useMutation(
+    (data) => API_INSTANCE.post("/auth/login", data),
+    {
+      onSuccess: (data) => {
+        toast.success(data.data?.message);
+        localStorage.setItem("token", data?.data?.token);
+        navigate(PATHS.home);
+      },
+      onError: (error) => {
+        console.log(error);
+        toast.error(error?.response?.data?.error);
+      },
+    }
+  );
+
+  const onSubmit = (data) => {
+    mutation.mutate(data);
+  };
+
   return (
     <div className="hero min-h-screen bg-base-200">
       <div className="hero-content flex-col lg:flex-row-reverse">
@@ -14,28 +46,36 @@ const LoginPage = () => {
           </p>
         </div>
         <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-          <form className="card-body">
+          <form onSubmit={handleSubmit(onSubmit)} className="card-body">
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Username</span>
               </label>
               <input
+                {...register("username")}
                 type="text"
+                name="username"
                 placeholder="Username"
                 className="input input-bordered"
-                required
               />
+              {errors?.username && (
+                <p className="text-red-400">{errors?.username?.message}</p>
+              )}
             </div>
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Password</span>
               </label>
               <input
+                {...register("password")}
                 type="password"
+                name="password"
                 placeholder="password"
                 className="input input-bordered"
-                required
               />
+              {errors?.password && (
+                <p className="text-red-400">{errors?.password?.message}</p>
+              )}
               <label className="label">
                 <Link
                   to={PATHS.forgotPassword}

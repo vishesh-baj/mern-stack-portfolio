@@ -40,20 +40,20 @@ export const login = async (req, res) => {
     // check if user exists in the db
     const user = await User.findOne({ username });
     if (!user) {
-      res.status(400).json({ error: "User not found" });
+      return res.status(400).json({ error: "User not found" });
     }
     // check the password
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      res.status(400).json({ error: "Password invalid" });
+      return res.status(400).json({ error: "Password invalid" });
     }
     // if password is valid create jwt token
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
     // send jwt token with response
-    res.status(200).json({ token });
+    return res.status(200).json({ token, message: "User logged in" });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 };

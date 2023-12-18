@@ -35,3 +35,27 @@ export const RoutesArray = [
     Element: PomodorosPage,
   },
 ];
+
+// sidebar mapping
+export const SIDEBAR_MAPPING = [
+  {
+    name: "Home",
+    path: PATHS.home,
+  },
+  {
+    name: "Todos",
+    path: PATHS.toods,
+  },
+  {
+    name: "Notes",
+    path: PATHS.notes,
+  },
+  {
+    name: "Pomodoros",
+    path: PATHS.pomodoros,
+  },
+  {
+    name: "Color Picker",
+    path: PATHS.colorPicker,
+  },
+];

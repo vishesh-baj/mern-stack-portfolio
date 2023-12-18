@@ -1,3 +1,7 @@
+import { Link } from "react-router-dom";
+import { SIDEBAR_MAPPING } from "../constants";
+import { nanoid } from "nanoid";
+
 const Sidebar = () => {
   return (
     <div className="drawer-side">
@@ -8,12 +12,13 @@ const Sidebar = () => {
       ></label>
       <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
         {/* Sidebar content here */}
-        <li>
-          <a>Sidebar Item 1</a>
-        </li>
-        <li>
-          <a>Sidebar Item 2</a>
-        </li>
+        {SIDEBAR_MAPPING.map((sidebarItem) => {
+          return (
+            <li key={nanoid()}>
+              <Link to={sidebarItem.path}>{sidebarItem.name}</Link>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

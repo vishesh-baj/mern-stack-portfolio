@@ -4,7 +4,7 @@ import helmet from "helmet";
 import cors from "cors";
 import mongoose from "mongoose";
 import todoRoutes from "./routes/todo.js";
-
+import authRoutes from "./routes/auth.js";
 dotenv.config();
 const app = express();
 
@@ -25,3 +25,4 @@ mongoose
 
 // routes
 app.use("/todos", todoRoutes);
+app.use("/auth", authRoutes);

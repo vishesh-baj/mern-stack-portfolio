@@ -1,7 +1,27 @@
 import PropTypes from "prop-types";
-
+import Sidebar from "../components/Sidebar";
+import Navbar from "../components/Navbar";
 const AppLayout = ({ children }) => {
-  return <div>{children}</div>;
+  return (
+    <div className="min-w-screen">
+      <div className="flex">
+        <div className="drawer lg:drawer-open">
+          <input
+            id="sidebar_drawer"
+            type="checkbox"
+            className="drawer-toggle"
+          />
+          <div className="drawer-content">
+            {/* Page content here */}
+            <Navbar />
+
+            {children}
+          </div>
+          <Sidebar />
+        </div>
+      </div>
+    </div>
+  );
 };
 
 AppLayout.propTypes = {

@@ -1,12 +1,16 @@
 import axios from "axios";
-import { BASE_URL } from "../constants";
 
 const token = localStorage.getItem("token");
+const headers = {
+  "Content-Type": "application/json",
+};
+
+if (token) {
+  headers.Authorization = token;
+}
+
 export const API_INSTANCE = axios.create({
-  BASE_URL,
+  baseURL: "http://localhost:8080/",
   timeout: 10000,
-  headers: {
-    "Content-Type": "application/json",
-    Authorization: token,
-  },
+  headers,
 });

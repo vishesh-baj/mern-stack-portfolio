@@ -5,8 +5,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { loginSchema } from "../validations";
 import { useMutation } from "react-query";
 import { API_INSTANCE } from "../api";
+import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
+import { setUser, setToken } from "../features/auth/authSlice";
 const LoginPage = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const {
     register,
@@ -18,8 +21,11 @@ const LoginPage = () => {
     (data) => API_INSTANCE.post("/auth/login", data),
     {
       onSuccess: (data) => {
+        dispatch(setUser(data.data?.username));
+        dispatch(setToken(data.data?.token));
         toast.success(data.data?.message);
         localStorage.setItem("token", data?.data?.token);
+        localStorage.setItem("username", data.data?.username);
         navigate(PATHS.home);
       },
       onError: (error) => {

@@ -13,3 +13,9 @@ export const loginSchema = yup.object({
   username: yup.string().required("Username is required"),
   password: yup.string().required("Password is required"),
 });
+
+export const todosSchema = yup.object({
+  title: yup.string().required("Title is required"),
+  description: yup.string().required("Description is required"),
+  dueDate: yup.string(),
+});

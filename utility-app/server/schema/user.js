@@ -7,6 +7,7 @@ const userSchema = mongoose.Schema({
   firstname: { type: String },
   lastname: { type: String },
   dateOfBirth: { type: Date },
+  
 });
 
 const UserModal = mongoose.model("user", userSchema);

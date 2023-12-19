@@ -18,6 +18,7 @@ const todoSchema = mongoose.Schema({
   dueDate: {
     type: Date,
   },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "user", required: true },
 });
 
 const TodoModal = mongoose.model("todo", todoSchema);

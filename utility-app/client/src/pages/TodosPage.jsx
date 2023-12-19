@@ -1,16 +1,42 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { todosSchema } from "../validations";
-
+import { useMutation, useQuery } from "react-query";
+import { API_INSTANCE } from "../api";
+import { toast } from "react-hot-toast";
 const TodosPage = () => {
   const {
     handleSubmit,
     register,
     formState: { errors },
+    reset,
   } = useForm({ resolver: yupResolver(todosSchema) });
 
+  const {
+    data: todos,
+    isLoading,
+    isError,
+    refetch,
+  } = useQuery("todos", async () => {
+    const response = await API_INSTANCE.get("todos/get-todos");
+    return response.data;
+  });
+
+  const mutation = useMutation(
+    (data) => API_INSTANCE.post("todos/create-todo", data),
+    {
+      onSuccess: (data) => {
+        console.log("DATA", data);
+        refetch();
+        toast.success(`${data.data?.title} added`);
+      },
+    }
+  );
+
   const onSubmit = (data) => {
-    console.log(data);
+    mutation.mutate(data);
+
+    reset();
   };
 
   return (
@@ -76,6 +102,15 @@ const TodosPage = () => {
             </div>
           </div>
         </form>
+        {todos && (
+          <ul>
+            {todos.map((todo) => (
+              <li key={todo.id}>
+                {todo.title} - {todo.description}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </div>
   );

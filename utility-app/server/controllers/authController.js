@@ -52,7 +52,7 @@ export const login = async (req, res) => {
       expiresIn: "1h",
     });
     // send jwt token with response
-    return res.status(200).json({ token, message: "User logged in" });
+    return res.status(200).json({ token, username, message: "User logged in" });
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }

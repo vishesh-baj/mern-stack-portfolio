@@ -4,6 +4,7 @@ import { todosSchema } from "../validations";
 import { useMutation, useQuery } from "react-query";
 import { API_INSTANCE } from "../api";
 import { toast } from "react-hot-toast";
+import { MdOutlineDeleteOutline, MdEdit } from "react-icons/md";
 const TodosPage = () => {
   const {
     handleSubmit,
@@ -102,10 +103,31 @@ const TodosPage = () => {
           </div>
         </form>
         {todos && (
-          <ul>
+          <ul className="flex flex-col overflow-x-hidden mt-4 gap-4 max-h-[40vh] overflow-y-scroll">
             {todos.map((todo) => (
-              <li key={todo.id}>
-                {todo.title} - {todo.description}
+              <li className="p-4 bg-base-100 " key={todo.id}>
+                <div className="flex justify-between">
+                  <div className="w-1/2">
+                    <div className="flex gap-4">
+                      <h1>Title:</h1>
+                      <p>{todo.title}</p>
+                    </div>
+                    <div className="flex gap-4">
+                      <h1>Description:</h1>
+                      <p className="max-h-20 overflow-y-auto whitespace-pre-wrap ">
+                        {todo.description}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex gap-2">
+                    <button className="btn btn-square">
+                      <MdOutlineDeleteOutline />
+                    </button>
+                    <button className="btn btn-square">
+                      <MdEdit />
+                    </button>
+                  </div>
+                </div>
               </li>
             ))}
           </ul>

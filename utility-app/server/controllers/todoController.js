@@ -16,7 +16,8 @@ export const createTodo = async (req, res) => {
 
 // get all todos
 export const getAllTodos = async (req, res) => {
-  const token = req.headers.authorization;
+  const token = req.headers?.authorization;
+  console.log("TOKEN: ", token);
   try {
     const userId = jwt.verify(token, process.env.JWT_SECRET).userId;
     const todos = await Todo.find({ user: userId });

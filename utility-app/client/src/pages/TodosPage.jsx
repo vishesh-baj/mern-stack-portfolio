@@ -35,7 +35,6 @@ const TodosPage = () => {
 
   const onSubmit = (data) => {
     mutation.mutate(data);
-
     reset();
   };
 

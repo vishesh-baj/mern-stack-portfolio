@@ -17,7 +17,6 @@ export const createTodo = async (req, res) => {
 // get all todos
 export const getAllTodos = async (req, res) => {
   const token = req.headers?.authorization;
-  console.log("TOKEN: ", token);
   try {
     const userId = jwt.verify(token, process.env.JWT_SECRET).userId;
     const todos = await Todo.find({ user: userId });
@@ -55,7 +54,6 @@ export const updateTodo = async (req, res) => {
 
 // delete todo by id
 export const deleteTodoById = async (req, res) => {
-  console.log(req.params.id);
   try {
     const deletedTodo = await Todo.findByIdAndDelete(req.params.id);
     if (!deletedTodo) {

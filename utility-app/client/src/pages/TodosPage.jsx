@@ -50,7 +50,8 @@ const TodosPage = () => {
   const editMutation = useMutation(
     ({ id, data }) => API_INSTANCE.put(`/todos/update-todo/${id}`, data),
     {
-      onSuccess: () => {
+      onSuccess: (data) => {
+        console.log(data);
         toast.success("Todo edited successfully");
         refetch();
       },
@@ -65,8 +66,9 @@ const TodosPage = () => {
       console.log(data);
       editMutation.mutate({ id: editedObject._id, data });
       setEditMode(false);
+      reset();
     } else {
-      console.log(data.dueDate);
+      console.log(data);
       mutation.mutate(data);
       reset();
     }
@@ -85,6 +87,11 @@ const TodosPage = () => {
       description: todo.description,
       dueDate: new Date(todo.dueDate).toISOString().split("T")[0],
     });
+  };
+
+  const onComplete = (todo) => {
+    const completedTodo = { ...todo, completed: true };
+    editMutation.mutate({ id: todo._id, data: completedTodo });
   };
 
   return (
@@ -143,22 +150,23 @@ const TodosPage = () => {
             </div>
             <div className="form-control md:w-1/2">
               <label className="label">
-                <span className="label-text">Action</span>{" "}
+                <span className="label-text hidden md:block">Action</span>{" "}
               </label>
               <button type="submit" className="btn btn-primary" name="" id="">
-                {editMode ? "EDIT TODO" : "ADD TODO"}
+                {editMode && todos.length > 0 ? "EDIT TODO" : "ADD TODO"}
               </button>
             </div>
           </div>
         </form>
         {todos && (
-          <ul className="flex flex-col overflow-x-hidden mt-4 gap-4 max-h-[40vh] overflow-y-scroll">
+          <ul className="flex flex-col  overflow-x-hidden mt-4 gap-4 max-h-[40vh] overflow-y-scroll">
             {todos.map((todo) => (
               <TodoCard
                 key={nanoid()}
                 todo={todo}
                 onDelete={onDelete}
                 onEdit={onEdit}
+                onComplete={onComplete}
               />
             ))}
           </ul>

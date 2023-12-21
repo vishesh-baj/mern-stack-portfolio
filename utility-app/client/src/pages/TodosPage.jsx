@@ -5,7 +5,11 @@ import { useMutation, useQuery } from "react-query";
 import { API_INSTANCE } from "../api";
 import { toast } from "react-hot-toast";
 import { MdOutlineDeleteOutline, MdEdit } from "react-icons/md";
+import { useState } from "react";
+
 const TodosPage = () => {
+  const [editMode, setEditMode] = useState(false);
+  const [editedObject, setEditedObject] = useState(null);
   const {
     handleSubmit,
     register,
@@ -34,9 +38,56 @@ const TodosPage = () => {
     }
   );
 
+  const deleteMutation = useMutation(
+    (id) => API_INSTANCE.delete(`/todos/delete-todo/${id}`),
+    {
+      onSuccess: () => {
+        refetch();
+        toast.success("Todo deleted successfully");
+      },
+      onError: () => {
+        toast.error("Error occured while deleting todo");
+      },
+    }
+  );
+
+  const editMutation = useMutation(
+    ({ id, data }) => API_INSTANCE.put(`/todos/update-todo/${id}`, data),
+    {
+      onSuccess: () => {
+        toast.success("Todo edited successfully");
+        refetch();
+      },
+      onError: (error) => {
+        toast.error(error);
+      },
+    }
+  );
+
   const onSubmit = (data) => {
-    mutation.mutate(data);
-    reset();
+    if (editMode) {
+      console.log(data);
+      editMutation.mutate({ id: editedObject._id, data });
+      setEditMode(false);
+    } else {
+      mutation.mutate(data);
+      reset();
+    }
+  };
+
+  const onDelete = (id) => {
+    console.log("ID: ", id);
+    deleteMutation.mutate(id);
+  };
+
+  const onEdit = (todo) => {
+    setEditMode(true);
+    setEditedObject(todo);
+    reset({
+      title: todo.title,
+      description: todo.description,
+      // dueDate: todo.dueDate,
+    });
   };
 
   return (
@@ -59,6 +110,7 @@ const TodosPage = () => {
               <p className="text-red-400">{errors.title?.message}</p>
             )}
           </div>
+
           <div className="form-control">
             <label className="label">
               <span className="label-text">Enter Todo Description</span>
@@ -97,7 +149,7 @@ const TodosPage = () => {
                 {/* Add some text here */}
               </label>
               <button type="submit" className="btn btn-primary" name="" id="">
-                Add Todo
+                {editMode ? "EDIT TODO" : "ADD TODO"}
               </button>
             </div>
           </div>
@@ -105,7 +157,7 @@ const TodosPage = () => {
         {todos && (
           <ul className="flex flex-col overflow-x-hidden mt-4 gap-4 max-h-[40vh] overflow-y-scroll">
             {todos.map((todo) => (
-              <li className="p-4 bg-base-100 " key={todo.id}>
+              <li className="p-4 bg-base-100 " key={todo._id}>
                 <div className="flex justify-between">
                   <div className="w-1/2">
                     <div className="flex gap-4">
@@ -120,11 +172,17 @@ const TodosPage = () => {
                     </div>
                   </div>
                   <div className="flex gap-2">
-                    <button className="btn btn-square">
-                      <MdOutlineDeleteOutline />
+                    <button
+                      onClick={() => onDelete(todo._id)}
+                      className="btn btn-square"
+                    >
+                      <MdOutlineDeleteOutline className="text-2xl text-red-400" />
                     </button>
-                    <button className="btn btn-square">
-                      <MdEdit />
+                    <button
+                      onClick={() => onEdit(todo)}
+                      className="btn btn-square "
+                    >
+                      <MdEdit className="text-2xl text-info" />
                     </button>
                   </div>
                 </div>

@@ -55,12 +55,13 @@ export const updateTodo = async (req, res) => {
 
 // delete todo by id
 export const deleteTodoById = async (req, res) => {
+  console.log(req.params.id);
   try {
     const deletedTodo = await Todo.findByIdAndDelete(req.params.id);
     if (!deletedTodo) {
       res.status(404).json({ error: "Todo not found" });
     }
-    res.status(204).send(json({ deletedTodo }));
+    res.status(204).json({ deletedTodo });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

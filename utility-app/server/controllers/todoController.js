@@ -2,10 +2,8 @@ import Todo from "../schema/todo.js";
 import jwt from "jsonwebtoken";
 // create a todo
 export const createTodo = async (req, res) => {
-  const token = req.headers.authorization;
   try {
-    const userId = jwt.verify(token, process.env.JWT_SECRET).userId;
-    const newTodo = new Todo({ ...req.body, user: userId });
+    const newTodo = new Todo({ ...req.body, user: req.user });
     console.log(newTodo);
     const savedTodo = await newTodo.save();
     res.status(201).json(savedTodo);
@@ -16,10 +14,8 @@ export const createTodo = async (req, res) => {
 
 // get all todos
 export const getAllTodos = async (req, res) => {
-  const token = req.headers?.authorization;
   try {
-    const userId = jwt.verify(token, process.env.JWT_SECRET).userId;
-    const todos = await Todo.find({ user: userId });
+    const todos = await Todo.find({ user: req.user });
     res.status(201).json(todos);
   } catch (error) {
     res.status(400).json({ error: error.message });

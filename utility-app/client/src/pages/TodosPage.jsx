@@ -83,7 +83,7 @@ const TodosPage = () => {
     reset({
       title: todo.title,
       description: todo.description,
-      // dueDate: todo.dueDate,
+      dueDate: new Date(todo.dueDate).toISOString().split("T")[0],
     });
   };
 
@@ -130,10 +130,11 @@ const TodosPage = () => {
                 <span className="label-text">Due Date</span>
               </label>
               <input
+                onChange={(e) => console.log(e.target.value)}
                 {...register("dueDate")}
                 className="input input-bordered"
                 type="date"
-                name=""
+                name="dueDate"
                 id=""
               />
               {errors.dueDate && (
@@ -143,7 +144,6 @@ const TodosPage = () => {
             <div className="form-control md:w-1/2">
               <label className="label">
                 <span className="label-text">Action</span>{" "}
-                {/* Add some text here */}
               </label>
               <button type="submit" className="btn btn-primary" name="" id="">
                 {editMode ? "EDIT TODO" : "ADD TODO"}

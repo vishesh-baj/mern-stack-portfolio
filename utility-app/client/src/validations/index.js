@@ -19,3 +19,9 @@ export const todosSchema = yup.object({
   description: yup.string().required("Description is required"),
   dueDate: yup.string().required("Date is required"),
 });
+
+export const notesSchema = yup.object({
+  title: yup.string().required("Title is required"),
+  description: yup.string().required("Description is required"),
+  color: yup.string().required("Pick a color"),
+});

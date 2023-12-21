@@ -1,5 +1,4 @@
 import Todo from "../schema/todo.js";
-import jwt from "jsonwebtoken";
 // create a todo
 export const createTodo = async (req, res) => {
   try {

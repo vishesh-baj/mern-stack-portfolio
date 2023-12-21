@@ -4,6 +4,7 @@ import { notesSchema } from "../validations";
 import { useMutation, useQuery } from "react-query";
 import { API_INSTANCE } from "../api";
 import { toast } from "react-hot-toast";
+import { nanoid } from "nanoid";
 const NotesPage = () => {
   const {
     register,
@@ -13,26 +14,30 @@ const NotesPage = () => {
     resolver: yupResolver(notesSchema),
   });
 
-  const { data: notes, refetch } = useQuery(
+  const { data, refetch } = useQuery(
     "notes",
     async () => {
       const response = await API_INSTANCE.get("notes/get-all-notes");
       return response.data;
     },
     {
-      onSuccess: () => {
-        toast.success("Notes fetched Successfully");
-        refetch();
+      onSuccess: (data) => {
+        console.log("NOTES DATA: ", data);
       },
       onError: (error) => {
         toast.error(error.message);
       },
-      staleTime: 100000,
     }
   );
 
-  const mutation = useMutation((data) =>
-    API_INSTANCE.post("/notes/create-note", data)
+  const mutation = useMutation(
+    (data) => API_INSTANCE.post("/notes/create-note", data),
+    {
+      onSuccess: () => {
+        refetch();
+        toast.success("Note created successfully");
+      },
+    }
   );
 
   const onSubmit = (data) => {
@@ -127,6 +132,12 @@ const NotesPage = () => {
         </div>
         <button className="btn btn-primary btn-wide">Add Note</button>
       </form>
+
+      <div>
+        {data?.notes.map((note) => {
+          return <div key={nanoid()}>{note.title}</div>;
+        })}
+      </div>
     </div>
   );
 };

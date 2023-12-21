@@ -4,8 +4,9 @@ import { todosSchema } from "../validations";
 import { useMutation, useQuery } from "react-query";
 import { API_INSTANCE } from "../api";
 import { toast } from "react-hot-toast";
-import { MdOutlineDeleteOutline, MdEdit } from "react-icons/md";
 import { useState } from "react";
+import { nanoid } from "nanoid";
+import TodoCard from "../components/TodoCard";
 
 const TodosPage = () => {
   const [editMode, setEditMode] = useState(false);
@@ -17,12 +18,7 @@ const TodosPage = () => {
     reset,
   } = useForm({ resolver: yupResolver(todosSchema) });
 
-  const {
-    data: todos,
-    isLoading,
-    isError,
-    refetch,
-  } = useQuery("todos", async () => {
+  const { data: todos, refetch } = useQuery("todos", async () => {
     const response = await API_INSTANCE.get("todos/get-todos");
     return response.data;
   });
@@ -70,6 +66,7 @@ const TodosPage = () => {
       editMutation.mutate({ id: editedObject._id, data });
       setEditMode(false);
     } else {
+      console.log(data.dueDate);
       mutation.mutate(data);
       reset();
     }
@@ -127,8 +124,8 @@ const TodosPage = () => {
               <p className="text-red-400">{errors.description?.message}</p>
             )}
           </div>
-          <div className="flex items-center gap-4">
-            <div className="form-control w-1/2">
+          <div className="flex flex-col  md:flex-row md:items-center gap-4">
+            <div className="form-control md:w-1/2">
               <label className="label">
                 <span className="label-text">Due Date</span>
               </label>
@@ -143,7 +140,7 @@ const TodosPage = () => {
                 <p className="text-red-400">{errors.dueDate?.message}</p>
               )}
             </div>
-            <div className="form-control w-1/2">
+            <div className="form-control md:w-1/2">
               <label className="label">
                 <span className="label-text">Action</span>{" "}
                 {/* Add some text here */}
@@ -157,36 +154,12 @@ const TodosPage = () => {
         {todos && (
           <ul className="flex flex-col overflow-x-hidden mt-4 gap-4 max-h-[40vh] overflow-y-scroll">
             {todos.map((todo) => (
-              <li className="p-4 bg-base-100 " key={todo._id}>
-                <div className="flex justify-between">
-                  <div className="w-1/2">
-                    <div className="flex gap-4">
-                      <h1>Title:</h1>
-                      <p>{todo.title}</p>
-                    </div>
-                    <div className="flex gap-4">
-                      <h1>Description:</h1>
-                      <p className="max-h-20 overflow-y-auto whitespace-pre-wrap ">
-                        {todo.description}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => onDelete(todo._id)}
-                      className="btn btn-square"
-                    >
-                      <MdOutlineDeleteOutline className="text-2xl text-red-400" />
-                    </button>
-                    <button
-                      onClick={() => onEdit(todo)}
-                      className="btn btn-square "
-                    >
-                      <MdEdit className="text-2xl text-info" />
-                    </button>
-                  </div>
-                </div>
-              </li>
+              <TodoCard
+                key={nanoid()}
+                todo={todo}
+                onDelete={onDelete}
+                onEdit={onEdit}
+              />
             ))}
           </ul>
         )}

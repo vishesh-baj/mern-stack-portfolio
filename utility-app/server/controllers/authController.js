@@ -49,7 +49,7 @@ export const login = async (req, res) => {
     }
     // if password is valid create jwt token
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "1h",
+      expiresIn: "24h",
     });
     // send jwt token with response
     return res.status(200).json({ token, username, message: "User logged in" });

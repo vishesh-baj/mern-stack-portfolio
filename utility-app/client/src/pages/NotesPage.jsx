@@ -6,7 +6,10 @@ import { API_INSTANCE } from "../api";
 import { toast } from "react-hot-toast";
 import { nanoid } from "nanoid";
 import NoteCard from "../components/NoteCard";
+import { useState } from "react";
 const NotesPage = () => {
+  const [editMode, seteditMode] = useState(false);
+  const [editedObject, setEditedObject] = useState(null);
   const {
     register,
     handleSubmit,
@@ -53,9 +56,25 @@ const NotesPage = () => {
     }
   );
 
+  const editMutation = useMutation(
+    ({ id, data }) => API_INSTANCE.put(`/notes/update-note/${id}`, data),
+    {
+      onSuccess: () => {
+        toast.success("Note edited successfully");
+        refetch();
+      },
+    }
+  );
+
   const onSubmit = (data) => {
-    console.log(data);
-    mutation.mutate(data);
+    if (editMode) {
+      editMutation.mutate({ id: editedObject._id, data });
+      seteditMode(false);
+      reset();
+    } else {
+      console.log(data);
+      mutation.mutate(data);
+    }
   };
 
   const onDelete = (id) => {
@@ -65,6 +84,13 @@ const NotesPage = () => {
 
   const onEdit = (note) => {
     console.log("NOTE TO BE EDITED: ", note);
+    seteditMode((prevState) => !prevState);
+    setEditedObject(note);
+    reset({
+      title: note.title,
+      description: note.description,
+      color: note.color,
+    });
   };
 
   return (
@@ -113,7 +139,7 @@ const NotesPage = () => {
               name="color"
               id=""
               value={"primary"}
-              defaultChecked
+              checked={editedObject?.color === "primary"}
             />
             <input
               {...register("color")}
@@ -152,7 +178,9 @@ const NotesPage = () => {
             )}
           </div>
         </div>
-        <button className="btn btn-primary btn-wide">Add Note</button>
+        <button className="btn btn-primary btn-wide">
+          {editMode ? "EDIT NOTE" : "ADD NOTE"}
+        </button>
       </form>
 
       <div className="grid grid-cols-4 gap-4 mt-4">

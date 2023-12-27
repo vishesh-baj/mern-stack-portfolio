@@ -5,10 +5,12 @@ import { useMutation, useQuery } from "react-query";
 import { API_INSTANCE } from "../api";
 import { toast } from "react-hot-toast";
 import { nanoid } from "nanoid";
+import NoteCard from "../components/NoteCard";
 const NotesPage = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(notesSchema),
@@ -35,7 +37,18 @@ const NotesPage = () => {
     {
       onSuccess: () => {
         refetch();
+        reset();
         toast.success("Note created successfully");
+      },
+    }
+  );
+
+  const deleteMutation = useMutation(
+    (id) => API_INSTANCE.delete(`/notes/delete-note/${id}`),
+    {
+      onSuccess: () => {
+        toast.success("Note Deleted Successfully");
+        refetch();
       },
     }
   );
@@ -43,6 +56,15 @@ const NotesPage = () => {
   const onSubmit = (data) => {
     console.log(data);
     mutation.mutate(data);
+  };
+
+  const onDelete = (id) => {
+    console.log("ID: ", id);
+    deleteMutation.mutate(id);
+  };
+
+  const onEdit = (note) => {
+    console.log("NOTE TO BE EDITED: ", note);
   };
 
   return (
@@ -133,9 +155,16 @@ const NotesPage = () => {
         <button className="btn btn-primary btn-wide">Add Note</button>
       </form>
 
-      <div>
+      <div className="grid grid-cols-4 gap-4 mt-4">
         {data?.notes.map((note) => {
-          return <div key={nanoid()}>{note.title}</div>;
+          return (
+            <NoteCard
+              note={note}
+              onDelete={onDelete}
+              onEdit={onEdit}
+              key={nanoid()}
+            />
+          );
         })}
       </div>
     </div>

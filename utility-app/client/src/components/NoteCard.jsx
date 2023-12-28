@@ -5,7 +5,7 @@ import { MdEdit, MdOutlineDeleteOutline } from "react-icons/md";
 const NoteCard = ({ note, onDelete, onEdit }) => {
   return (
     <div
-      className={`card bg-${note?.color} text-primary-content col-span-4 sm:col-span-1 min-w-96`}
+      className={`card ${note.color} text-primary-content col-span-4 sm:col-span-1 min-w-96`}
       key={nanoid()}
     >
       <div className="card-body">

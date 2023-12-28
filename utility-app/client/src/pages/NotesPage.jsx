@@ -40,7 +40,6 @@ const NotesPage = () => {
     {
       onSuccess: () => {
         refetch();
-        reset();
         toast.success("Note created successfully");
       },
     }
@@ -70,10 +69,10 @@ const NotesPage = () => {
     if (editMode) {
       editMutation.mutate({ id: editedObject._id, data });
       seteditMode(false);
-      reset();
     } else {
       console.log(data);
       mutation.mutate(data);
+      reset();
     }
   };
 
@@ -138,8 +137,7 @@ const NotesPage = () => {
               type="radio"
               name="color"
               id=""
-              value={"primary"}
-              checked={editedObject?.color === "primary"}
+              value={"bg-primary"}
             />
             <input
               {...register("color")}
@@ -147,7 +145,7 @@ const NotesPage = () => {
               type="radio"
               name="color"
               id=""
-              value={"secondary"}
+              value={"bg-secondary"}
             />
             <input
               {...register("color")}
@@ -155,7 +153,7 @@ const NotesPage = () => {
               type="radio"
               name="color"
               id=""
-              value={"accent"}
+              value={"bg-accent"}
             />
             <input
               {...register("color")}
@@ -163,7 +161,7 @@ const NotesPage = () => {
               type="radio"
               name="color"
               id=""
-              value={"success"}
+              value={"bg-success"}
             />
             <input
               {...register("color")}
@@ -171,7 +169,7 @@ const NotesPage = () => {
               type="radio"
               name="color"
               id=""
-              value={"info"}
+              value={"bg-info"}
             />
             {errors.color && (
               <p className="text-red-400">{errors.color?.message}</p>

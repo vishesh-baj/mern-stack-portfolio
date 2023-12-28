@@ -67,12 +67,13 @@ const NotesPage = () => {
 
   const onSubmit = (data) => {
     if (editMode) {
+      reset();
       editMutation.mutate({ id: editedObject._id, data });
       seteditMode(false);
     } else {
+      reset();
       console.log(data);
       mutation.mutate(data);
-      reset();
     }
   };
 
@@ -91,7 +92,6 @@ const NotesPage = () => {
       color: note.color,
     });
   };
-
   return (
     <div className="p-6 w-[96%] mx-auto bg-base-300 rounded-xl">
       <h1 className="text-2xl">Notes</h1>

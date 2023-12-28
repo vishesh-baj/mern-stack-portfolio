@@ -67,9 +67,9 @@ const NotesPage = () => {
 
   const onSubmit = (data) => {
     if (editMode) {
-      reset();
       editMutation.mutate({ id: editedObject._id, data });
       seteditMode(false);
+      reset({ title: "", description: "", color: "" });
     } else {
       reset();
       console.log(data);
@@ -157,11 +157,11 @@ const NotesPage = () => {
             />
             <input
               {...register("color")}
-              className="radio radio-success"
+              className="radio radio-warning"
               type="radio"
               name="color"
               id=""
-              value={"bg-success"}
+              value={"bg-warning"}
             />
             <input
               {...register("color")}

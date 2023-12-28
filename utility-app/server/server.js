@@ -6,6 +6,7 @@ import mongoose from "mongoose";
 import todoRoutes from "./routes/todo.js";
 import authRoutes from "./routes/auth.js";
 import noteRoutes from "./routes/note.js";
+import colorPaletteRoutes from "./routes/colorPalette.js";
 dotenv.config();
 const app = express();
 
@@ -28,3 +29,4 @@ mongoose
 app.use("/todos", todoRoutes);
 app.use("/auth", authRoutes);
 app.use("/notes", noteRoutes);
+app.use("/palette", colorPaletteRoutes);

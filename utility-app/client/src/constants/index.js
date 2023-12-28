@@ -55,7 +55,7 @@ export const SIDEBAR_MAPPING = [
     path: PATHS.pomodoros,
   },
   {
-    name: "Color Picker",
+    name: "Color Palettes",
     path: PATHS.colorPicker,
   },
 ];

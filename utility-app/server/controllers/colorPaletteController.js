@@ -2,7 +2,7 @@ import ColorPalette from "../schema/colorPalette.js";
 
 export const createPalette = async (req, res) => {
   try {
-    const newPalette = new ColorPalette(req.body);
+    const newPalette = new ColorPalette({ ...req.body, user: req.user });
     if (!newPalette) {
       res.status(404).json({
         error: "Color Palette cannot be create due to insufficient information",

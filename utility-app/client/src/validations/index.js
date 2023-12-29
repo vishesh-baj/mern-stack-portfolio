@@ -25,3 +25,7 @@ export const notesSchema = yup.object({
   description: yup.string().required("Description is required"),
   color: yup.string().required("Pick a color"),
 });
+
+export const colorPaletteValidation = yup.object({
+  title: yup.string().required("Title is required"),
+});

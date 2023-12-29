@@ -9,7 +9,7 @@ const Navbar = () => {
   const username = localStorage.getItem("username");
 
   return (
-    <div className="navbar bg-base-100 flex justify-between">
+    <div className="navbar bg-base-100 flex justify-between sticky top-0">
       <a className="btn btn-ghost text-xl ">Utility App</a>
       <div>
         <p className="text-xs">Welcome {username}</p>

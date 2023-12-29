@@ -9,6 +9,7 @@ import { Modal } from "../components/Modal";
 import { colorPaletteModalMapping } from "../constants";
 import { nanoid } from "nanoid";
 import ColorPaletteMini from "../components/ColorPaletteMini";
+
 const ColorPalettePage = () => {
   const [randomColors, setRandomColors] = useState([]);
   const handleGenerateColors = () => {

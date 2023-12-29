@@ -1,3 +1,5 @@
+import toast from "react-hot-toast";
+
 export const generateRandomColors = () => {
   const randomHue = () => Math.floor(Math.random() * 360);
   const randomSaturation = () => Math.floor(Math.random() * 100);
@@ -52,4 +54,14 @@ export const hslToHex = (h, s, l) => {
 
   const hexCode = `#${toHex(r)}${toHex(g)}${toHex(b)}`;
   return hexCode;
+};
+
+export const handleColorClick = (colorCode) => {
+  const tempInput = document.createElement("input");
+  tempInput.value = colorCode;
+  document.body.appendChild(tempInput);
+  tempInput.select();
+  document.execCommand("copy");
+  document.body.removeChild(tempInput);
+  toast.success(`Color code ${colorCode} copied to clipboard!`);
 };

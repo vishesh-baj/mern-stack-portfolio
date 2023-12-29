@@ -1,23 +1,41 @@
 import { useState } from "react";
 import { generateRandomColors } from "../utils";
 import ColorPalette from "../components/ColorPalette";
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { API_INSTANCE } from "../api";
 import { toast } from "react-hot-toast";
 import { colorPaletteValidation } from "../validations";
 import { Modal } from "../components/Modal";
+import { colorPaletteModalMapping } from "../constants";
+import { nanoid } from "nanoid";
+import ColorPaletteMini from "../components/ColorPaletteMini";
 const ColorPalettePage = () => {
   const [randomColors, setRandomColors] = useState([]);
   const handleGenerateColors = () => {
     const randomColors = generateRandomColors();
     setRandomColors(randomColors);
   };
+
+  const { data: colorPalettedData, refetch } = useQuery(
+    "color-palette",
+    async () => {
+      const response = await API_INSTANCE.get("palette/get-all-palettes");
+      return response.data;
+    },
+    {
+      onSuccess: (data) => {
+        console.log(data);
+      },
+    }
+  );
+
   const addMutation = useMutation(
     (data) => API_INSTANCE.post("/palette/create-palette", data),
     {
       onSuccess: (data) => {
         console.log(data);
         toast.success("Palette added successfully");
+        refetch();
       },
       onError: (error) => {
         toast.error(error.message);
@@ -25,14 +43,15 @@ const ColorPalettePage = () => {
     }
   );
 
-  const inputs = [
+  const deleteMutation = useMutation(
+    (id) => API_INSTANCE.delete(`/palette/delete-palette/${id}`),
     {
-      name: "title",
-      label: "Enter Title",
-      type: "text",
-      placeholder: "Title for the palette",
-    },
-  ];
+      onSuccess: () => {
+        toast.success("Palette Deleted Successfully");
+        refetch();
+      },
+    }
+  );
 
   const handleModalFormSubmit = (data) => {
     console.log(data);
@@ -42,6 +61,10 @@ const ColorPalettePage = () => {
       colors: randomColors,
     };
     addMutation.mutate(payload);
+  };
+
+  const handleDeletePalette = (id) => {
+    deleteMutation.mutate(id);
   };
 
   return (
@@ -64,8 +87,19 @@ const ColorPalettePage = () => {
           Save
         </button>
       </div>
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        {colorPalettedData?.colorPalettes.map((colorPalette) => {
+          return (
+            <ColorPaletteMini
+              deleteHandler={handleDeletePalette}
+              colorPaletteDetails={colorPalette}
+              key={nanoid()}
+            />
+          );
+        })}
+      </div>
       <Modal
-        inputs={inputs}
+        inputs={colorPaletteModalMapping}
         onSubmit={handleModalFormSubmit}
         validationSchema={colorPaletteValidation}
         modalId="generatePaletteTitle"

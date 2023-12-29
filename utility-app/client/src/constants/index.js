@@ -59,3 +59,12 @@ export const SIDEBAR_MAPPING = [
     path: PATHS.colorPicker,
   },
 ];
+
+export const colorPaletteModalMapping = [
+  {
+    name: "title",
+    label: "Enter Title",
+    type: "text",
+    placeholder: "Title for the palette",
+  },
+];

@@ -52,7 +52,11 @@ export const Modal = ({ onSubmit, inputs, modalId, validationSchema }) => {
             <button type="submit" className="btn btn-primary">
               Save Title
             </button>
-            <button type="button" className="btn">
+            <button
+              onClick={() => document.getElementById(modalId).close()}
+              type="button"
+              className="btn"
+            >
               Close
             </button>
           </div>

@@ -8,6 +8,7 @@ import {
 import { PATHS } from "../routes/paths";
 import { nanoid } from "nanoid";
 // routes array
+
 export const RoutesArray = [
   {
     key: nanoid(),

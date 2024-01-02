@@ -1,16 +1,52 @@
 import { nanoid } from "nanoid";
 import PropTypes from "prop-types";
 import { handleColorClick } from "../utils";
-import { MdEdit, MdOutlineDeleteOutline } from "react-icons/md";
-const ColorPaletteMini = ({ colorPaletteDetails, deleteHandler }) => {
-  const { _id, title, colors } = colorPaletteDetails;
+import { MdEdit, MdEditOff, MdOutlineDeleteOutline } from "react-icons/md";
+import { useState } from "react";
+const ColorPaletteMini = ({
+  colorPaletteDetails,
+  deleteHandler,
+  editHandler,
+}) => {
+  const [editMode, setEditMode] = useState(false);
+  const [editData, setEditData] = useState(colorPaletteDetails);
+  const { _id, title, colors } = editData;
+
+  const handleChange = (title) => {
+    setEditData((prevState) => {
+      return { ...prevState, title };
+    });
+  };
+
+  const handleSubmit = () => {
+    setEditMode((prevState) => !prevState);
+    editHandler(editData);
+  };
 
   return (
     <div className="mt-4 bg-base-200 p-2 rounded-xl">
       <div className="flex justify-between ">
-        <h1 className="text-md">{title}</h1>
+        <input
+          onChange={(e) => handleChange(e.target.value)}
+          disabled={!editMode}
+          className=" bg-transparent"
+          type="text"
+          value={title}
+          name=""
+          id=""
+        />
         <div className="flex gap-4">
-          <MdEdit className="text-2xl cursor-pointer text-teal-400 hover:text-teal-500" />
+          {editMode ? (
+            <MdEditOff
+              onClick={() => handleSubmit(editData)}
+              className="text-2xl cursor-pointer text-teal-400 hover:text-teal-500"
+            />
+          ) : (
+            <MdEdit
+              onClick={() => setEditMode((prevState) => !prevState)}
+              className="text-2xl cursor-pointer text-teal-400 hover:text-teal-500"
+            />
+          )}
           <MdOutlineDeleteOutline
             onClick={() => deleteHandler(_id)}
             className="text-2xl text-red-400 hover:text-red-500 cursor-pointer"
@@ -27,9 +63,7 @@ const ColorPaletteMini = ({ colorPaletteDetails, deleteHandler }) => {
                 idx === 0 ? "rounded-l-xl" : idx === 4 ? "rounded-r-xl" : ""
               }`}
               onClick={() => handleColorClick(randomColor)}
-            >
-              {/* <p className="mb-4">{randomColor}</p> */}
-            </div>
+            ></div>
           );
         })}
       </div>
@@ -44,6 +78,7 @@ ColorPaletteMini.propTypes = {
     colors: PropTypes.arrayOf(PropTypes.string).isRequired,
   }),
   deleteHandler: PropTypes.func.isRequired,
+  editHandler: PropTypes.func.isRequired,
 };
 
 export default ColorPaletteMini;

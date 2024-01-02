@@ -54,6 +54,20 @@ const ColorPalettePage = () => {
     }
   );
 
+  const editMutation = useMutation(
+    ({ id, data }) =>
+      API_INSTANCE.put(
+        `http://localhost:8080/palette/edit-palette/${id}`,
+        data
+      ),
+    {
+      onSuccess: (data) => {
+        refetch();
+        toast.success("Palette edited successfully");
+      },
+    }
+  );
+
   const handleModalFormSubmit = (data) => {
     console.log(data);
     document.getElementById("generatePaletteTitle").close();
@@ -66,6 +80,14 @@ const ColorPalettePage = () => {
 
   const handleDeletePalette = (id) => {
     deleteMutation.mutate(id);
+  };
+  const handleEditPalette = (data) => {
+    console.log(data);
+    const payload = {
+      title: data.title,
+      colors: data.colors,
+    };
+    editMutation.mutate({ id: data._id, data: payload });
   };
 
   return (
@@ -92,6 +114,7 @@ const ColorPalettePage = () => {
         {colorPalettedData?.colorPalettes.map((colorPalette) => {
           return (
             <ColorPaletteMini
+              editHandler={handleEditPalette}
               deleteHandler={handleDeletePalette}
               colorPaletteDetails={colorPalette}
               key={nanoid()}

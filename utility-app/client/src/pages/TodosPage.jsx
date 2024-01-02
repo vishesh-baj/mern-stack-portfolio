@@ -95,7 +95,7 @@ const TodosPage = () => {
   };
 
   return (
-    <div className="p-6 w-[96%] mx-auto bg-base-300 rounded-xl">
+    <section className="p-6 w-[96%] mx-auto bg-base-300 rounded-xl">
       <div>
         <h1 className="text-2xl">Todos</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -172,7 +172,7 @@ const TodosPage = () => {
           </ul>
         )}
       </div>
-    </div>
+    </section>
   );
 };
 

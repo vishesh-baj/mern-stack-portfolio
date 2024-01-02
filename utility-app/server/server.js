@@ -7,6 +7,7 @@ import todoRoutes from "./routes/todo.js";
 import authRoutes from "./routes/auth.js";
 import noteRoutes from "./routes/note.js";
 import colorPaletteRoutes from "./routes/colorPalette.js";
+import pomodoroRoutes from "./routes/pomodoro.js";
 dotenv.config();
 const app = express();
 
@@ -30,3 +31,4 @@ app.use("/todos", todoRoutes);
 app.use("/auth", authRoutes);
 app.use("/notes", noteRoutes);
 app.use("/palette", colorPaletteRoutes);
+app.use("/pomodoro", pomodoroRoutes);

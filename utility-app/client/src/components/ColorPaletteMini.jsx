@@ -35,7 +35,7 @@ const ColorPaletteMini = ({
           name=""
           id=""
         />
-        <div className="flex gap-4">
+        <div className="flex gap-1">
           {editMode ? (
             <MdEditOff
               onClick={() => handleSubmit(editData)}

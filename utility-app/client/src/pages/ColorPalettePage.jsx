@@ -61,9 +61,12 @@ const ColorPalettePage = () => {
         data
       ),
     {
-      onSuccess: (data) => {
+      onSuccess: () => {
         refetch();
         toast.success("Palette edited successfully");
+      },
+      onError: (error) => {
+        toast.error(error.message);
       },
     }
   );

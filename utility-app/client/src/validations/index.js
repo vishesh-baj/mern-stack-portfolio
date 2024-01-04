@@ -34,5 +34,8 @@ export const pomodoroValidationSchema = yup.object({
   title: yup.string().required("Title is required"),
   breakTime: yup.number().required("Break Time is required"),
   intervelTime: yup.number().required("Intervel Time is required"),
-  intervelCount: yup.number().required("Intervel Count is required"),
+  intervelCount: yup
+    .number()
+    .required("Intervel Count is required")
+    .max(8, "Maximum count cannout exceed 8"),
 });

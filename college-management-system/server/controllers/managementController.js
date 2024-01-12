@@ -38,9 +38,10 @@ export const updateManagement = async (req, res) => {
     if (!updatedManagement) {
       res.status(404).json({ message: "Unable to update management" });
     }
-    res
-      .status(204)
-      .json({ message: "Successfully updated management", updatedManagement });
+    res.status(200).json({
+      message: "Successfully updated management",
+      data: updatedManagement,
+    });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

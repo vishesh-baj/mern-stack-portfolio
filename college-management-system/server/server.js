@@ -1,8 +1,9 @@
+import dotEnv from "dotenv";
+dotEnv.config();
 import express from "express";
 import cors from "cors";
-import dotEnv from "dotenv";
 import mongoose from "mongoose";
-dotEnv.config();
+import managementRoutes from "./routes/management.js";
 
 const app = express();
 
@@ -15,3 +16,10 @@ mongoose
     app.listen(PORT, () => console.log("SERVER STARTED"));
   })
   .catch((error) => console.log("ERROR OCCURED: ", error));
+
+// middlewares
+app.use(express.json());
+app.use(cors());
+
+// routes
+app.use("/management", managementRoutes);

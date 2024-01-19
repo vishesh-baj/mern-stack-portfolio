@@ -24,7 +24,7 @@ export const login = async (req, res) => {
   try {
     const { username, password } = req.body;
     // if user exists
-    const user = await User.find({ username });
+    const user = await User.findOne({ username });
     if (!user) {
       return res.status(401).json({ message: "Invalid Credentials" });
     }
@@ -33,7 +33,10 @@ export const login = async (req, res) => {
     if (!isPasswordValid) {
       return res.status(401).json({ message: "Invalid Credentials" });
     }
-    const token = jwt.sign({ username, role: user.role }, "your-secret-key");
+    const token = jwt.sign(
+      { username, role: user.role },
+      process.env.JWT_SECRET_KEY
+    );
     res.status(200).json({ token });
   } catch (error) {
     console.error(error);

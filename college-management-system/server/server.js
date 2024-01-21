@@ -5,6 +5,8 @@ import mongoose from "mongoose";
 dotenv.config();
 import authRoutes from "./routes/auth.js";
 import studentRoutes from "./routes/student.js";
+import teacherRoutes from "./routes/teacher.js";
+
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -20,3 +22,4 @@ mongoose
 
 app.use("/auth", authRoutes);
 app.use("/student", studentRoutes);
+app.use("/teacher", teacherRoutes);

@@ -4,7 +4,7 @@ import {
   deleteTeacher,
   getAllTeachers,
   updateTeacher,
-} from "../controllers/teacher";
+} from "../controllers/teacher.js";
 
 const router = Router();
 

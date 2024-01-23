@@ -5,6 +5,7 @@ import { RoutesArray } from "./constants";
 import { PATHS } from "./routes/paths";
 import { HomePage, LoginPage, PageNotFound, RegisterPage } from "./pages";
 import { Toaster } from "react-hot-toast";
+
 const App = () => {
   const isAuthenticated = localStorage.getItem("token");
   return (

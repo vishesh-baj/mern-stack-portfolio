@@ -12,5 +12,4 @@ router.get("/get-all-students", verifyToken, getAllStudents);
 router.post("/create-student", verifyToken, createStudent);
 router.put("/update-student/:id", verifyToken, updateStudent);
 router.delete("/delete-student/:id", verifyToken, deleteStudent);
-
 export default router;

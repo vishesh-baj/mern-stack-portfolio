@@ -1,15 +1,40 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loginSchema } from "../validations";
+import { useMutation } from "react-query";
+import { API_INSTANCE } from "../api";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
+import { PATHS } from "../routes/paths";
 
 const LoginPage = () => {
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: yupResolver(loginSchema) });
 
-  const onSubmit = (data) => console.log(data);
+  const mutation = useMutation(
+    (data) => API_INSTANCE.post("auth/login", data),
+    {
+      onSuccess: (responseData) => {
+        console.log("Login successful:", responseData.data?.token);
+        localStorage.setItem("token", responseData?.data?.token);
+        toast("Logged In");
+        navigate(PATHS.dashboard);
+      },
+      onError: (error) => {
+        console.error("Login failed:", error);
+        toast("Error occured");
+      },
+    }
+  );
+
+  const onSubmit = (data) => {
+    mutation.mutate(data);
+  };
 
   return (
     <div className="hero min-h-screen bg-base-200">

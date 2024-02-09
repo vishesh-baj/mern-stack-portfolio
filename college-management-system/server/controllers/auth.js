@@ -3,16 +3,16 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 export const register = async (req, res) => {
   try {
-    const { username, password, role } = req.body;
+    const { email, password, role } = req.body;
     // check if user already exists
-    const existingUser = await User.findOne({ username });
+    const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: "User already exists" });
     }
     // hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
     // create a new user
-    const user = new User({ username, password: hashedPassword, role });
+    const user = new User({ email, password: hashedPassword, role });
     await user.save();
     res.status(201).json({ message: "User registered successfully" });
   } catch (error) {
@@ -34,7 +34,7 @@ export const login = async (req, res) => {
       return res.status(401).json({ message: "Invalid Credentials" });
     }
     const token = jwt.sign(
-      { username, role: user.role },
+      { email: user.email, role: user.role },
       process.env.JWT_SECRET_KEY
     );
     res.status(200).json({ token });

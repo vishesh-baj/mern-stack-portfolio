@@ -15,7 +15,7 @@ const LoginPage = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: yupResolver(loginSchema) });
-
+  // login mutation
   const mutation = useMutation(
     (data) => API_INSTANCE.post("auth/login", data),
     {

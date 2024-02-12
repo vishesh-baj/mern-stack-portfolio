@@ -1,32 +1,30 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { loginSchema } from "../validations";
+import { registerSchema } from "../validations";
 import { useMutation } from "react-query";
 import { API_INSTANCE } from "../api";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { PATHS } from "../routes/paths";
 
-const LoginPage = () => {
+const RegisterPage = () => {
   const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({ resolver: yupResolver(loginSchema) });
+  } = useForm({ resolver: yupResolver(registerSchema) });
 
   const mutation = useMutation(
-    (data) => API_INSTANCE.post("auth/login", data),
+    (data) => API_INSTANCE.post("auth/register", data),
     {
       onSuccess: (responseData) => {
-        console.log("Login successful:", responseData.data?.token);
-        localStorage.setItem("token", responseData?.data?.token);
-        toast("Logged In");
-        navigate(PATHS.dashboard);
+        console.log(responseData);
+        navigate(PATHS.login);
       },
       onError: (error) => {
-        console.error("Login failed:", error);
+        console.error("Register failed:", error);
         toast("Error occured");
       },
     }
@@ -40,7 +38,7 @@ const LoginPage = () => {
     <div className="hero min-h-screen bg-base-200">
       <div className="hero-content flex-col lg:flex-row-reverse">
         <div className="text-center lg:text-left">
-          <h1 className="text-5xl font-bold">Login now!</h1>
+          <h1 className="text-5xl font-bold">Register now!</h1>
           <p className="py-6">
             Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
             excepturi exercitationem quasi. In deleniti eaque aut repudiandae et
@@ -66,6 +64,41 @@ const LoginPage = () => {
             </div>
             <div className="form-control">
               <label className="label">
+                <span className="label-text">First Name</span>
+              </label>
+              <input
+                {...register("firstName")}
+                name="firstName"
+                type="email"
+                placeholder="email"
+                className="input input-bordered"
+              />
+              {errors.firstName && (
+                <p className="text-xs text-rose-500">
+                  {errors.firstName?.message}
+                </p>
+              )}
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Last Name</span>
+              </label>
+              <input
+                {...register("lastName")}
+                name="lastName"
+                type="email"
+                placeholder="email"
+                className="input input-bordered"
+              />
+              {errors.lastName && (
+                <p className="text-xs text-rose-500">
+                  {errors.lastName?.message}
+                </p>
+              )}
+            </div>
+
+            <div className="form-control">
+              <label className="label">
                 <span className="label-text">Password</span>
               </label>
               <input
@@ -80,20 +113,35 @@ const LoginPage = () => {
                   {errors.password?.message}
                 </p>
               )}
+            </div>
+
+            <div className="form-control">
               <label className="label">
-                <a href="#" className="label-text-alt link link-hover">
-                  Forgot password?
-                </a>
+                <span className="label-text">Confirm Password</span>
+              </label>
+              <input
+                {...register("password")}
+                name="confirmPassword"
+                type="password"
+                placeholder="password"
+                className="input input-bordered"
+              />
+              {errors.confirmPassword && (
+                <p className="text-xs text-rose-500">
+                  {errors.confirmPassword?.message}
+                </p>
+              )}
+              <label className="label">
                 <Link
-                  to={PATHS.register}
+                  to={PATHS.login}
                   className="label-text-alt link link-hover"
                 >
-                  Register
+                  Already have account?
                 </Link>
               </label>
             </div>
             <div className="form-control mt-6">
-              <button className="btn btn-primary">Login</button>
+              <button className="btn btn-primary">Register</button>
             </div>
           </form>
         </div>
@@ -102,4 +150,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default RegisterPage;

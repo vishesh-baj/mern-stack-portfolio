@@ -70,7 +70,7 @@ const RegisterPage = () => {
                 {...register("firstName")}
                 name="firstName"
                 type="email"
-                placeholder="email"
+                placeholder="first name"
                 className="input input-bordered"
               />
               {errors.firstName && (
@@ -87,7 +87,7 @@ const RegisterPage = () => {
                 {...register("lastName")}
                 name="lastName"
                 type="email"
-                placeholder="email"
+                placeholder="last name"
                 className="input input-bordered"
               />
               {errors.lastName && (

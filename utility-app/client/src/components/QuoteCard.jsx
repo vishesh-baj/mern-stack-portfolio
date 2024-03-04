@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { FaHeart } from "react-icons/fa";
 const QuoteCard = ({ quoteData }) => {
   return (
@@ -11,6 +12,13 @@ const QuoteCard = ({ quoteData }) => {
       </div>
     </div>
   );
+};
+
+QuoteCard.propTypes = {
+  quoteData: PropTypes.shape({
+    content: PropTypes.string.isRequired,
+    author: PropTypes.string.isRequired,
+  }),
 };
 
 export default QuoteCard;

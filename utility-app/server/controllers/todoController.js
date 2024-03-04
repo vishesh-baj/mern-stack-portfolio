@@ -16,6 +16,7 @@ export const getAllTodos = async (req, res) => {
   try {
     const todos = await Todo.find({ user: req.user });
     res.status(201).json(todos);
+    console.log(todosCount);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

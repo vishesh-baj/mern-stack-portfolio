@@ -81,5 +81,6 @@ export const HOMEPAGE_CARD_MAPPING = [
   },
   {
     title: "Color Pallette",
+    color: "bg-secondary",
   },
 ];

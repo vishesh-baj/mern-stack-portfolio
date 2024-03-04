@@ -20,7 +20,7 @@ const BookCard = ({ book, refetchFunction }) => {
     const mutationData = {
       title: book.volumeInfo?.title,
       authors: book.volumeInfo?.authors,
-      description: book.volumeInfo?.description,
+      description: book.volumeInfo?.description || "",
       rating: book.volumeInfo?.averageRating,
       imageUrl: book.volumeInfo?.imageLinks?.thumbnail,
     };

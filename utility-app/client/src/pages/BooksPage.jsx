@@ -11,9 +11,12 @@ import { convertToApiString } from "../utils";
 import BookCard from "../components/BookCard";
 import { API_INSTANCE } from "../api";
 import Loader from "../components/Loader";
+import SavedBookCard from "../components/SavedBookCard";
 const BooksPage = () => {
   const [activeTab, setActiveTab] = useState("browse");
   const [bookSearchData, setBookSearchData] = useState([]);
+  const [expandedId, setExpandedId] = useState(null);
+
   const {
     register,
     handleSubmit,
@@ -50,6 +53,10 @@ const BooksPage = () => {
     console.log(data);
     bookSearchMutation.mutate(data.searchInput);
     reset();
+  };
+
+  const handleToggleDescription = (bookId) => {
+    setExpandedId((prevId) => (prevId === bookId ? null : bookId));
   };
 
   return (
@@ -117,14 +124,18 @@ const BooksPage = () => {
           {isLoading ? (
             <Loader />
           ) : (
-            savedBooksData &&
-            savedBooksData.allBooks.map((savedBook) => {
-              return (
-                <div key={savedBook._id}>
-                  <h2>{savedBook.title}</h2>
-                </div>
-              );
-            })
+            savedBooksData && (
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                {savedBooksData.allBooks.map((savedBook) => (
+                  <SavedBookCard
+                    key={savedBook._id}
+                    toggleHandler={handleToggleDescription}
+                    bookData={savedBook}
+                    expandedId={expandedId}
+                  />
+                ))}
+              </div>
+            )
           )}
         </div>
       </div>

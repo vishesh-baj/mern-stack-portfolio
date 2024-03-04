@@ -11,6 +11,7 @@ import { nanoid } from "nanoid";
 export const GOOGLE_BOOKS_API_KEY = "AIzaSyAJdR8sRchyQjOKgRD0AG_WRODXezzeGy0";
 export const GOOGLE_BOOKS_API_ENDPOINT =
   "https://www.googleapis.com/books/v1/volumes?";
+  
 export const RoutesArray = [
   {
     key: nanoid(),
@@ -93,5 +94,9 @@ export const HOMEPAGE_CARD_MAPPING = [
   {
     title: "Color Pallette",
     color: "bg-secondary",
+  },
+  {
+    title: "Books",
+    color: "bg-warning",
   },
 ];

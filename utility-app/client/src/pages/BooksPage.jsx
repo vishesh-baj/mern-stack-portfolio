@@ -132,6 +132,7 @@ const BooksPage = () => {
                     toggleHandler={handleToggleDescription}
                     bookData={savedBook}
                     expandedId={expandedId}
+                    refetchFunction={refetch}
                   />
                 ))}
               </div>

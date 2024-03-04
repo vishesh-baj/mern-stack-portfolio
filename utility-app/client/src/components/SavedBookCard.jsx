@@ -1,12 +1,30 @@
 import PropTypes from "prop-types";
 import { MdOutlineDelete } from "react-icons/md";
 import Rating from "./Ratings";
-
-const SavedBookCard = ({ bookData, toggleHandler, expandedId }) => {
+import { useMutation } from "react-query";
+import { API_INSTANCE } from "../api";
+import toast from "react-hot-toast";
+const SavedBookCard = ({
+  bookData,
+  toggleHandler,
+  expandedId,
+  refetchFunction,
+}) => {
   const { _id, title, description, imageUrl, rating } = bookData;
 
+  const deleteBookMutation = useMutation(
+    (id) => API_INSTANCE.delete(`/book/delete-book/${id}`),
+    {
+      onSuccess: (data) => {
+        console.log("DELETED DATA: ", data);
+        toast("Book deleted successfully");
+        refetchFunction();
+      },
+    }
+  );
+
   const handleDeleteBook = () => {
-    // Add your delete book logic here
+    deleteBookMutation.mutate(_id);
   };
 
   return (
@@ -54,6 +72,7 @@ SavedBookCard.propTypes = {
   }).isRequired,
   toggleHandler: PropTypes.func.isRequired,
   expandedId: PropTypes.string.isRequired,
+  refetchFunction: PropTypes.func.isRequired,
 };
 
 export default SavedBookCard;

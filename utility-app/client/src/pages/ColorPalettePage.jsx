@@ -10,7 +10,7 @@ import { colorPaletteModalMapping } from "../constants";
 import { nanoid } from "nanoid";
 import ColorPaletteMini from "../components/ColorPaletteMini";
 import Loader from "../components/Loader";
-
+import SectionLayout from "../layout/SectionLayout";
 const ColorPalettePage = () => {
   const [randomColors, setRandomColors] = useState([]);
   const handleGenerateColors = () => {
@@ -91,8 +91,7 @@ const ColorPalettePage = () => {
   };
 
   return (
-    <div className="p-6 w-[96%] mx-auto bg-base-300 rounded-xl">
-      <h1 className="text-2xl">Color Palette</h1>
+    <SectionLayout sectionTitle="Color Palette">
       <ColorPalette randomColors={randomColors} />
       <div className="flex items-center justify-between mt-4">
         <button
@@ -132,7 +131,7 @@ const ColorPalettePage = () => {
         validationSchema={colorPaletteValidation}
         modalId="generatePaletteTitle"
       />
-    </div>
+    </SectionLayout>
   );
 };
 

@@ -12,7 +12,6 @@ const AppLayout = ({ children }) => {
             className="drawer-toggle"
           />
           <div className="drawer-content">
-            {/* Page content here */}
             <Navbar />
 
             {children}

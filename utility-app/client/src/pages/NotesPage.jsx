@@ -8,6 +8,7 @@ import { nanoid } from "nanoid";
 import NoteCard from "../components/NoteCard";
 import { useState } from "react";
 import Loader from "../components/Loader";
+import SectionLayout from "../layout/SectionLayout";
 const NotesPage = () => {
   const [editMode, seteditMode] = useState(false);
   const [editedObject, setEditedObject] = useState(null);
@@ -94,8 +95,7 @@ const NotesPage = () => {
     });
   };
   return (
-    <div className="p-6 w-[96%] mx-auto bg-base-300 rounded-xl">
-      <h1 className="text-2xl">Notes</h1>
+    <SectionLayout sectionTitle="Notes">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="form-control">
           <label className="label">
@@ -198,7 +198,7 @@ const NotesPage = () => {
           })}
         </div>
       )}
-    </div>
+    </SectionLayout>
   );
 };
 

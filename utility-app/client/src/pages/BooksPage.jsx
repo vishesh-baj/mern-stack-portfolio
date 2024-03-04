@@ -1,7 +1,7 @@
-import React from "react";
+import SectionLayout from "../layout/SectionLayout";
 
 const BooksPage = () => {
-  return <div>BooksPage</div>;
+  return <SectionLayout sectionTitle="Books">I am Books</SectionLayout>;
 };
 
 export default BooksPage;

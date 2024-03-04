@@ -65,3 +65,10 @@ export const handleColorClick = (colorCode) => {
   document.body.removeChild(tempInput);
   toast.success(`Color code ${colorCode} copied to clipboard!`);
 };
+
+export const convertToApiString = (string) => {
+  const splittedStr = string.split(" ");
+  const convertedString = splittedStr.join("+");
+  console.log(convertedString);
+  return convertedString;
+};

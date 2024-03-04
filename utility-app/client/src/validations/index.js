@@ -39,3 +39,7 @@ export const pomodoroValidationSchema = yup.object({
     .required("Intervel Count is required")
     .max(8, "Maximum count cannout exceed 8"),
 });
+
+export const bookSearchSchema = yup.object({
+  searchInput: yup.string().required("Search Input is required"),
+});

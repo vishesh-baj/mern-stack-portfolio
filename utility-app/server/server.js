@@ -9,6 +9,7 @@ import noteRoutes from "./routes/note.js";
 import colorPaletteRoutes from "./routes/colorPalette.js";
 import pomodoroRoutes from "./routes/pomodoro.js";
 import countRoutes from "./routes/counts.js";
+import bookRoutes from "./routes/book.js";
 dotenv.config();
 const app = express();
 
@@ -34,3 +35,4 @@ app.use("/notes", noteRoutes);
 app.use("/palette", colorPaletteRoutes);
 app.use("/pomodoro", pomodoroRoutes);
 app.use("/counts", countRoutes);
+app.use("/book", bookRoutes);

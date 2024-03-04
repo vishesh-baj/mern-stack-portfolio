@@ -1,7 +1,112 @@
+import { useState } from "react";
 import SectionLayout from "../layout/SectionLayout";
-
+import { CiSearch } from "react-icons/ci";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { bookSearchSchema } from "../validations";
+import { useMutation } from "react-query";
+import { GOOGLE_BOOKS_API_ENDPOINT, GOOGLE_BOOKS_API_KEY } from "../constants";
+import axios from "axios";
+import { convertToApiString } from "../utils";
+import BookCard from "../components/BookCard";
 const BooksPage = () => {
-  return <SectionLayout sectionTitle="Books">I am Books</SectionLayout>;
+  const [activeTab, setActiveTab] = useState("browse");
+  const [bookSearchData, setBookSearchData] = useState([]);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({ resolver: yupResolver(bookSearchSchema) });
+
+  const bookSearchMutation = useMutation(
+    (bookSearchQuery) =>
+      axios.get(
+        `${GOOGLE_BOOKS_API_ENDPOINT}q=${convertToApiString(
+          bookSearchQuery
+        )}&key=${GOOGLE_BOOKS_API_KEY}`
+      ),
+    {
+      onSuccess: (data) => {
+        console.log("BOOK SEARCH DATA: ", data.data?.items);
+        setBookSearchData(data.data?.items);
+      },
+    }
+  );
+
+  const onSubmit = (data) => {
+    console.log(data);
+    bookSearchMutation.mutate(data.searchInput);
+    reset();
+  };
+
+  return (
+    <SectionLayout sectionTitle="Books">
+      <div role="tablist" className="tabs tabs-lifted mt-4">
+        <input
+          type="radio"
+          name="books_tabs"
+          role="tab"
+          className="tab"
+          aria-label="Browse"
+          onClick={() => setActiveTab("browse")}
+          checked={activeTab === "browse"}
+        />
+        <div
+          role="tabpanel"
+          className={`tab-content bg-base-100 border-base-300 rounded-box p-6 ${
+            activeTab === "browse" ? "" : "hidden"
+          }`}
+        >
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="flex w-full gap-4 items-center justify-between"
+          >
+            <div className="form-control flex-1">
+              <input
+                {...register("searchInput")}
+                className="input input-bordered"
+                type="text"
+                name="searchInput"
+                id="searchInput"
+                placeholder="Search Books"
+              />
+              <p className="mt-1 text-rose-400 pl-1">
+                {errors.searchInput?.message}
+              </p>
+            </div>
+            <button type="submit" className="btn btn-circle">
+              <CiSearch className="text-xl" />
+            </button>
+          </form>
+
+          <div className="flex flex-col gap-4 mt-4 overflow-y-auto max-h-96">
+            {bookSearchData.map((book) => (
+              <BookCard key={book.id} book={book} />
+            ))}
+          </div>
+        </div>
+
+        <input
+          type="radio"
+          name="books_tabs"
+          role="tab"
+          className="tab"
+          aria-label="Saved"
+          onClick={() => setActiveTab("saved")}
+          checked={activeTab === "saved"}
+        />
+        <div
+          role="tabpanel"
+          className={`tab-content bg-base-100 border-base-300 rounded-box p-6 ${
+            activeTab === "saved" ? "" : "hidden"
+          }`}
+        >
+          Tab Content 2
+        </div>
+      </div>
+    </SectionLayout>
+  );
 };
 
 export default BooksPage;

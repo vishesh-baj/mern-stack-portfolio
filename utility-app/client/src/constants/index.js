@@ -9,7 +9,8 @@ import { PATHS } from "../routes/paths";
 import { nanoid } from "nanoid";
 // routes array
 export const GOOGLE_BOOKS_API_KEY = "AIzaSyAJdR8sRchyQjOKgRD0AG_WRODXezzeGy0";
-
+export const GOOGLE_BOOKS_API_ENDPOINT =
+  "https://www.googleapis.com/books/v1/volumes?";
 export const RoutesArray = [
   {
     key: nanoid(),

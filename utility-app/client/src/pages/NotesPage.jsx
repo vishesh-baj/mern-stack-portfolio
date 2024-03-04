@@ -7,6 +7,7 @@ import { toast } from "react-hot-toast";
 import { nanoid } from "nanoid";
 import NoteCard from "../components/NoteCard";
 import { useState } from "react";
+
 const NotesPage = () => {
   const [editMode, seteditMode] = useState(false);
   const [editedObject, setEditedObject] = useState(null);

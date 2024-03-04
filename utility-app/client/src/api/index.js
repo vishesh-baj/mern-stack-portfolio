@@ -20,5 +20,5 @@ API_INSTANCE.interceptors.request.use(
   },
   (errors) => {
     return Promise.reject(errors);
-  }
+  },
 );

@@ -30,11 +30,11 @@ export const RoutesArray = [
     path: PATHS.colorPicker,
     Element: ColorPalettePage,
   },
-  {
-    key: nanoid(),
-    path: PATHS.pomodoros,
-    Element: PomodorosPage,
-  },
+  // {
+  //   key: nanoid(),
+  //   path: PATHS.pomodoros,
+  //   Element: PomodorosPage,
+  // },
 ];
 
 // sidebar mapping
@@ -52,13 +52,13 @@ export const SIDEBAR_MAPPING = [
     path: PATHS.notes,
   },
   {
-    name: "Pomodoros",
-    path: PATHS.pomodoros,
-  },
-  {
     name: "Color Palettes",
     path: PATHS.colorPicker,
   },
+  // {
+  //   name: "Pomodoros",
+  //   path: PATHS.pomodoros,
+  // },
 ];
 
 export const colorPaletteModalMapping = [
@@ -67,5 +67,19 @@ export const colorPaletteModalMapping = [
     label: "Enter Title",
     type: "text",
     placeholder: "Title for the palette",
+  },
+];
+
+export const HOMEPAGE_CARD_MAPPING = [
+  {
+    title: "Todos",
+    color: "bg-primary",
+  },
+  {
+    title: "Notes",
+    color: "bg-accent",
+  },
+  {
+    title: "Color Pallette",
   },
 ];

@@ -22,18 +22,10 @@ const ColorPalettePage = () => {
     data: colorPalettedData,
     refetch,
     isLoading,
-  } = useQuery(
-    "color-palette",
-    async () => {
-      const response = await API_INSTANCE.get("palette/get-all-palettes");
-      return response.data;
-    },
-    {
-      onSuccess: (data) => {
-        console.log(data);
-      },
-    }
-  );
+  } = useQuery("color-palette", async () => {
+    const response = await API_INSTANCE.get("palette/get-all-palettes");
+    return response.data;
+  });
 
   const addMutation = useMutation(
     (data) => API_INSTANCE.post("/palette/create-palette", data),

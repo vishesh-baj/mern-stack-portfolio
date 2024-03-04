@@ -8,4 +8,5 @@ export const PATHS = {
   pomodoros: "/pomodoros",
   colorPicker: "/color-picker",
   books: "/books",
+  quotes: "/quotes",
 };

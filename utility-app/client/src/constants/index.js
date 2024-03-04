@@ -3,6 +3,7 @@ import {
   ColorPalettePage,
   HomePage,
   NotesPage,
+  QuotesPage,
   TodosPage,
 } from "../pages";
 import { PATHS } from "../routes/paths";
@@ -11,7 +12,9 @@ import { nanoid } from "nanoid";
 export const GOOGLE_BOOKS_API_KEY = "AIzaSyAJdR8sRchyQjOKgRD0AG_WRODXezzeGy0";
 export const GOOGLE_BOOKS_API_ENDPOINT =
   "https://www.googleapis.com/books/v1/volumes?";
-  
+export const QUOTES_API_ENDPOINT =
+  "https://api.quotable.io/quotes/random?limit=25";
+
 export const RoutesArray = [
   {
     key: nanoid(),
@@ -37,6 +40,11 @@ export const RoutesArray = [
     key: nanoid(),
     path: PATHS.books,
     Element: BooksPage,
+  },
+  {
+    key: nanoid(),
+    path: PATHS.quotes,
+    Element: QuotesPage,
   },
   // {
   //   key: nanoid(),
@@ -66,6 +74,10 @@ export const SIDEBAR_MAPPING = [
   {
     name: "Books",
     path: PATHS.books,
+  },
+  {
+    name: "Quotes",
+    path: PATHS.quotes,
   },
   // {
   //   name: "Pomodoros",

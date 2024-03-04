@@ -7,3 +7,4 @@ export { default as NotesPage } from "./NotesPage";
 export { default as PomodorosPage } from "./PomodorosPage";
 export { default as ColorPalettePage } from "./ColorPalettePage";
 export { default as PageNotFound } from "./PageNotFound";
+export { default as BooksPage } from "./BooksPage";

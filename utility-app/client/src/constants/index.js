@@ -1,4 +1,10 @@
-import { ColorPalettePage, HomePage, NotesPage, TodosPage } from "../pages";
+import {
+  BooksPage,
+  ColorPalettePage,
+  HomePage,
+  NotesPage,
+  TodosPage,
+} from "../pages";
 import { PATHS } from "../routes/paths";
 import { nanoid } from "nanoid";
 // routes array
@@ -24,6 +30,11 @@ export const RoutesArray = [
     key: nanoid(),
     path: PATHS.colorPicker,
     Element: ColorPalettePage,
+  },
+  {
+    key: nanoid(),
+    path: PATHS.books,
+    Element: BooksPage,
   },
   // {
   //   key: nanoid(),

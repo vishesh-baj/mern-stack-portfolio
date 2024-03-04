@@ -7,7 +7,7 @@ import { toast } from "react-hot-toast";
 import { useState } from "react";
 import { nanoid } from "nanoid";
 import TodoCard from "../components/TodoCard";
-
+import Loader from "../components/Loader";
 const TodosPage = () => {
   const [editMode, setEditMode] = useState(false);
   const [editedObject, setEditedObject] = useState(null);
@@ -18,7 +18,11 @@ const TodosPage = () => {
     reset,
   } = useForm({ resolver: yupResolver(todosSchema) });
 
-  const { data: todos, refetch } = useQuery("todos", async () => {
+  const {
+    data: todos,
+    refetch,
+    isLoading,
+  } = useQuery("todos", async () => {
     const response = await API_INSTANCE.get("todos/get-todos");
     return response.data;
   });
@@ -158,18 +162,22 @@ const TodosPage = () => {
             </div>
           </div>
         </form>
-        {todos && (
-          <ul className="flex flex-col  overflow-x-hidden mt-4 gap-4 max-h-[40vh] overflow-y-scroll">
-            {todos.map((todo) => (
-              <TodoCard
-                key={nanoid()}
-                todo={todo}
-                onDelete={onDelete}
-                onEdit={onEdit}
-                onComplete={onComplete}
-              />
-            ))}
-          </ul>
+        {isLoading ? (
+          <Loader />
+        ) : (
+          todos && (
+            <ul className="flex flex-col  overflow-x-hidden mt-4 gap-4 max-h-[40vh] overflow-y-scroll">
+              {todos.map((todo) => (
+                <TodoCard
+                  key={nanoid()}
+                  todo={todo}
+                  onDelete={onDelete}
+                  onEdit={onEdit}
+                  onComplete={onComplete}
+                />
+              ))}
+            </ul>
+          )
         )}
       </div>
     </section>

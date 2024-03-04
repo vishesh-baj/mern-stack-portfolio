@@ -7,7 +7,7 @@ import { toast } from "react-hot-toast";
 import { nanoid } from "nanoid";
 import NoteCard from "../components/NoteCard";
 import { useState } from "react";
-
+import Loader from "../components/Loader";
 const NotesPage = () => {
   const [editMode, seteditMode] = useState(false);
   const [editedObject, setEditedObject] = useState(null);
@@ -20,7 +20,7 @@ const NotesPage = () => {
     resolver: yupResolver(notesSchema),
   });
 
-  const { data, refetch } = useQuery(
+  const { data, refetch, isLoading } = useQuery(
     "notes",
     async () => {
       const response = await API_INSTANCE.get("notes/get-all-notes");
@@ -182,18 +182,22 @@ const NotesPage = () => {
         </button>
       </form>
 
-      <div className="grid grid-cols-4 gap-4 mt-4">
-        {data?.notes.map((note) => {
-          return (
-            <NoteCard
-              note={note}
-              onDelete={onDelete}
-              onEdit={onEdit}
-              key={nanoid()}
-            />
-          );
-        })}
-      </div>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <div className="grid grid-cols-4 gap-4 mt-4">
+          {data?.notes.map((note) => {
+            return (
+              <NoteCard
+                note={note}
+                onDelete={onDelete}
+                onEdit={onEdit}
+                key={nanoid()}
+              />
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 };

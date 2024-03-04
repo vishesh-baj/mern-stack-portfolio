@@ -9,6 +9,7 @@ import { Modal } from "../components/Modal";
 import { colorPaletteModalMapping } from "../constants";
 import { nanoid } from "nanoid";
 import ColorPaletteMini from "../components/ColorPaletteMini";
+import Loader from "../components/Loader";
 
 const ColorPalettePage = () => {
   const [randomColors, setRandomColors] = useState([]);
@@ -17,7 +18,11 @@ const ColorPalettePage = () => {
     setRandomColors(randomColors);
   };
 
-  const { data: colorPalettedData, refetch } = useQuery(
+  const {
+    data: colorPalettedData,
+    refetch,
+    isLoading,
+  } = useQuery(
     "color-palette",
     async () => {
       const response = await API_INSTANCE.get("palette/get-all-palettes");
@@ -113,18 +118,22 @@ const ColorPalettePage = () => {
           Save
         </button>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        {colorPalettedData?.colorPalettes.map((colorPalette) => {
-          return (
-            <ColorPaletteMini
-              editHandler={handleEditPalette}
-              deleteHandler={handleDeletePalette}
-              colorPaletteDetails={colorPalette}
-              key={nanoid()}
-            />
-          );
-        })}
-      </div>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          {colorPalettedData?.colorPalettes.map((colorPalette) => {
+            return (
+              <ColorPaletteMini
+                editHandler={handleEditPalette}
+                deleteHandler={handleDeletePalette}
+                colorPaletteDetails={colorPalette}
+                key={nanoid()}
+              />
+            );
+          })}
+        </div>
+      )}
       <Modal
         inputs={colorPaletteModalMapping}
         onSubmit={handleModalFormSubmit}

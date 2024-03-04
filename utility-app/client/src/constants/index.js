@@ -1,13 +1,8 @@
-import {
-  ColorPalettePage,
-  HomePage,
-  NotesPage,
-  PomodorosPage,
-  TodosPage,
-} from "../pages";
+import { ColorPalettePage, HomePage, NotesPage, TodosPage } from "../pages";
 import { PATHS } from "../routes/paths";
 import { nanoid } from "nanoid";
 // routes array
+export const GOOGLE_BOOKS_API_KEY = "AIzaSyAJdR8sRchyQjOKgRD0AG_WRODXezzeGy0";
 
 export const RoutesArray = [
   {
@@ -54,6 +49,10 @@ export const SIDEBAR_MAPPING = [
   {
     name: "Color Palettes",
     path: PATHS.colorPicker,
+  },
+  {
+    name: "Books",
+    path: PATHS.books,
   },
   // {
   //   name: "Pomodoros",

@@ -7,4 +7,5 @@ export const PATHS = {
   notes: "/notes",
   pomodoros: "/pomodoros",
   colorPicker: "/color-picker",
+  books: "/books",
 };

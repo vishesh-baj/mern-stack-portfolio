@@ -3,11 +3,16 @@ import Ratings from "../components/Ratings";
 import { FaHeart } from "react-icons/fa";
 import { useMutation } from "react-query";
 import { API_INSTANCE } from "../api";
-const BookCard = ({ book }) => {
+import toast from "react-hot-toast";
+const BookCard = ({ book, refetchFunction }) => {
   const saveBookMutation = useMutation(
     (data) => API_INSTANCE.post("/book/add-book", data),
     {
-      onSuccess: (data) => console.log("SAVED DATA: ", data),
+      onSuccess: (data) => {
+        refetchFunction();
+        console.log("SAVED DATA: ", data);
+        toast("Successfully saved book");
+      },
     }
   );
 
@@ -62,6 +67,7 @@ BookCard.propTypes = {
       }),
     }),
   }).isRequired,
+  refetchFunction: PropTypes.func.isRequired,
 };
 
 export default BookCard;

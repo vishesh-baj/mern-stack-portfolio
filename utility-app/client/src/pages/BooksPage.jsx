@@ -4,11 +4,13 @@ import { CiSearch } from "react-icons/ci";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { bookSearchSchema } from "../validations";
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { GOOGLE_BOOKS_API_ENDPOINT, GOOGLE_BOOKS_API_KEY } from "../constants";
 import axios from "axios";
 import { convertToApiString } from "../utils";
 import BookCard from "../components/BookCard";
+import { API_INSTANCE } from "../api";
+import Loader from "../components/Loader";
 const BooksPage = () => {
   const [activeTab, setActiveTab] = useState("browse");
   const [bookSearchData, setBookSearchData] = useState([]);
@@ -19,6 +21,17 @@ const BooksPage = () => {
     formState: { errors },
   } = useForm({ resolver: yupResolver(bookSearchSchema) });
 
+  const fetchSavedBooks = async () => {
+    const response = await API_INSTANCE.get("/book/get-all-books");
+    return response.data;
+  };
+
+  const {
+    data: savedBooksData,
+    isLoading,
+    refetch,
+  } = useQuery("fetch-books", fetchSavedBooks);
+
   const bookSearchMutation = useMutation(
     (bookSearchQuery) =>
       axios.get(
@@ -28,7 +41,6 @@ const BooksPage = () => {
       ),
     {
       onSuccess: (data) => {
-        console.log("BOOK SEARCH DATA: ", data.data?.items);
         setBookSearchData(data.data?.items);
       },
     }
@@ -82,7 +94,7 @@ const BooksPage = () => {
 
           <div className="flex flex-col gap-4 mt-4 overflow-y-auto max-h-96">
             {bookSearchData.map((book) => (
-              <BookCard key={book.id} book={book} />
+              <BookCard refetchFunction={refetch} key={book.id} book={book} />
             ))}
           </div>
         </div>
@@ -102,7 +114,18 @@ const BooksPage = () => {
             activeTab === "saved" ? "" : "hidden"
           }`}
         >
-          Tab Content 2
+          {isLoading ? (
+            <Loader />
+          ) : (
+            savedBooksData &&
+            savedBooksData.allBooks.map((savedBook) => {
+              return (
+                <div key={savedBook._id}>
+                  <h2>{savedBook.title}</h2>
+                </div>
+              );
+            })
+          )}
         </div>
       </div>
     </SectionLayout>

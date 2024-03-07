@@ -1,16 +1,14 @@
 import { useState } from "react";
 import { generateRandomColors } from "../utils";
-import ColorPalette from "../components/ColorPalette";
 import { useMutation, useQuery } from "react-query";
 import { API_INSTANCE } from "../api";
 import { toast } from "react-hot-toast";
 import { colorPaletteValidation } from "../validations";
-import { Modal } from "../components/Modal";
 import { colorPaletteModalMapping } from "../constants";
 import { nanoid } from "nanoid";
-import ColorPaletteMini from "../components/ColorPaletteMini";
 import Loader from "../components/Loader";
 import SectionLayout from "../layout/SectionLayout";
+import { ColorPalette, ColorPaletteMini, Modal } from "../components";
 const ColorPalettePage = () => {
   const [randomColors, setRandomColors] = useState([]);
   const handleGenerateColors = () => {

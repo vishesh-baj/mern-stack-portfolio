@@ -2,8 +2,7 @@ import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { nanoid } from "nanoid";
 import PropTypes from "prop-types";
-
-export const Modal = ({ onSubmit, inputs, modalId, validationSchema }) => {
+const Modal = ({ onSubmit, inputs, modalId, validationSchema }) => {
   const {
     reset,
     control,
@@ -79,3 +78,5 @@ Modal.propTypes = {
   modalId: PropTypes.string.isRequired,
   validationSchema: PropTypes.object.isRequired,
 };
+
+export default Modal;

@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import CountBadge from "../components/CountBadge";
+import { CountBadge } from "../components";
 
 const HomePageCard = ({ cardTitle, cardColor, count }) => {
   return (

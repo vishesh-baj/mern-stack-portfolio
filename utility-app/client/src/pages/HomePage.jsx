@@ -1,5 +1,5 @@
 import { nanoid } from "nanoid";
-import HomePageCard from "../components/HomePageCard";
+import { HomePageCard } from "../components";
 import { HOMEPAGE_CARD_MAPPING } from "../constants";
 import { useQuery } from "react-query";
 import { API_INSTANCE } from "../api";

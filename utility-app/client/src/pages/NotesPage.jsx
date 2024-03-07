@@ -5,7 +5,7 @@ import { useMutation, useQuery } from "react-query";
 import { API_INSTANCE } from "../api";
 import { toast } from "react-hot-toast";
 import { nanoid } from "nanoid";
-import NoteCard from "../components/NoteCard";
+import { NoteCard } from "../components";
 import { useState } from "react";
 import Loader from "../components/Loader";
 import SectionLayout from "../layout/SectionLayout";

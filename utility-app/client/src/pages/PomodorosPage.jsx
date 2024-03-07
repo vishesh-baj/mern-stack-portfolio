@@ -2,7 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { pomodoroValidationSchema } from "../validations";
 import { useState } from "react";
-import PomodoroSection from "../components/PomodoroSection";
+import { PomodoroSection } from "../components";
 const PomodorosPage = () => {
   const [pomodoroConfig, setPomodoroConfig] = useState({});
   const [isPomodoroActive, setIsPomodoroActive] = useState(false);

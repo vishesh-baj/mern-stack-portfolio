@@ -6,8 +6,7 @@ import { API_INSTANCE } from "../api";
 import { toast } from "react-hot-toast";
 import { useState } from "react";
 import { nanoid } from "nanoid";
-import TodoCard from "../components/TodoCard";
-import Loader from "../components/Loader";
+import { TodoCard, Loader } from "../components";
 import SectionLayout from "../layout/SectionLayout";
 
 const TodosPage = () => {

@@ -8,7 +8,7 @@ import { useMutation, useQuery } from "react-query";
 import { GOOGLE_BOOKS_API_ENDPOINT, GOOGLE_BOOKS_API_KEY } from "../constants";
 import axios from "axios";
 import { convertToApiString } from "../utils";
-import BookCard from "../components/BookCard";
+import { BookCard } from "../components";
 import { API_INSTANCE } from "../api";
 import Loader from "../components/Loader";
 import SavedBookCard from "../components/SavedBookCard";

@@ -10,7 +10,7 @@ const router = Router();
 
 router.get("/get-all-palettes", verifyToken, getAllPalettes);
 router.post("/create-palette", verifyToken, createPalette);
-router.put("/edit-palette/:id", editPalette);
-router.delete("/delete-palette/:id", deletePalette);
+router.put("/edit-palette/:id", verifyToken, editPalette);
+router.delete("/delete-palette/:id", verifyToken, deletePalette);
 
 export default router;

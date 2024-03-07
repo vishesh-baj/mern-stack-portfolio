@@ -1,5 +1,6 @@
 import { RxHamburgerMenu } from "react-icons/rx";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
+import ThemeController from "./ThemeController";
 
 const Navbar = () => {
   const handleLogout = () => {
@@ -11,8 +12,10 @@ const Navbar = () => {
   return (
     <div className="navbar bg-base-100 flex justify-between sticky top-0">
       <a className="btn btn-ghost text-xl ">Utility App</a>
+      <ThemeController />
       <div>
         <p className="text-xs">Welcome {username}</p>
+
         <button
           className="btn btn-ghost hidden lg:block"
           onClick={handleLogout}

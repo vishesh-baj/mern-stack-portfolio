@@ -111,4 +111,8 @@ export const HOMEPAGE_CARD_MAPPING = [
     title: "Books",
     color: "bg-warning",
   },
+  {
+    title: "Quotes",
+    color: "bg-error",
+  },
 ];

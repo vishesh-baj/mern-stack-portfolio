@@ -6,10 +6,12 @@ import {
   QUIZ_CATEGORY_MAPPING,
 } from "../constants";
 import { useMutation } from "react-query";
-import { Loader, QuizCategoryBadge } from "../components";
+import { QuizCategoryBadge } from "../components";
 import { nanoid } from "nanoid";
 import toast from "react-hot-toast";
+import { useState } from "react";
 const QuizPage = () => {
+  const [selectedCategory, setSelectedCategory] = useState("");
   const LIMIT = 10;
 
   const quizMutation = useMutation(
@@ -24,6 +26,10 @@ const QuizPage = () => {
   );
 
   const handleSelectCategory = (selectedCategory) => {
+    setSelectedCategory(selectedCategory);
+  };
+
+  const handleStartQuiz = () => {
     quizMutation.mutate({
       QUIZ_API_ENDPOINT,
       QUIZ_API_TOKEN,
@@ -31,7 +37,6 @@ const QuizPage = () => {
       categoryName: selectedCategory.categoryName,
     });
   };
-
   return (
     <SectionLayout sectionTitle="Quiz">
       {
@@ -47,6 +52,14 @@ const QuizPage = () => {
                 />
               );
             })}
+          </div>
+          <div className="w-full flex ">
+            <button
+              onClick={handleStartQuiz}
+              className="btn-wide flex-1 btn btn-accent mt-4"
+            >
+              Start Quiz
+            </button>
           </div>
         </>
       }

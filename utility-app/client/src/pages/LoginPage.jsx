@@ -34,7 +34,7 @@ const LoginPage = () => {
       },
     }
   );
- 
+
   const onSubmit = (data) => {
     mutation.mutate(data);
   };

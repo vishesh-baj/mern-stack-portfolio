@@ -59,30 +59,40 @@ export const SIDEBAR_MAPPING = [
     name: "Home",
     path: PATHS.home,
   },
+
   {
-    name: "Todos",
-    path: PATHS.toods,
+    name: "Development",
+    hasMenu: true,
+    children: [
+      {
+        name: "Todos",
+        path: PATHS.toods,
+      },
+      {
+        name: "Notes",
+        path: PATHS.notes,
+      },
+      {
+        name: "Color Palettes",
+        path: PATHS.colorPicker,
+      },
+    ],
   },
+
   {
-    name: "Notes",
-    path: PATHS.notes,
+    name: "Personal",
+    hasMenu: true,
+    children: [
+      {
+        name: "Books",
+        path: PATHS.books,
+      },
+      {
+        name: "Quotes",
+        path: PATHS.quotes,
+      },
+    ],
   },
-  {
-    name: "Color Palettes",
-    path: PATHS.colorPicker,
-  },
-  {
-    name: "Books",
-    path: PATHS.books,
-  },
-  {
-    name: "Quotes",
-    path: PATHS.quotes,
-  },
-  // {
-  //   name: "Pomodoros",
-  //   path: PATHS.pomodoros,
-  // },
 ];
 
 export const colorPaletteModalMapping = [

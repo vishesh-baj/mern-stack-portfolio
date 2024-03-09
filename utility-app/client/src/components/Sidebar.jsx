@@ -11,11 +11,27 @@ const Sidebar = () => {
         className="drawer-overlay"
       ></label>
       <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
-        {/* Sidebar content here */}
         {SIDEBAR_MAPPING.map((sidebarItem) => {
           return (
             <li key={nanoid()}>
-              <NavLink to={sidebarItem.path}>{sidebarItem.name}</NavLink>
+              {sidebarItem.hasMenu ? (
+                <details>
+                  <summary>{sidebarItem.name}</summary>
+                  <ul>
+                    <li>
+                      {sidebarItem.children.map((menuItem) => {
+                        return (
+                          <NavLink key={nanoid()} to={menuItem.path}>
+                            {menuItem.name}
+                          </NavLink>
+                        );
+                      })}
+                    </li>
+                  </ul>
+                </details>
+              ) : (
+                <NavLink to={sidebarItem.path}>{sidebarItem.name}</NavLink>
+              )}
             </li>
           );
         })}

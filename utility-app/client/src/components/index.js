@@ -15,3 +15,4 @@ export { default as SavedBookCard } from "./SavedBookCard";
 export { default as Sidebar } from "./Sidebar";
 export { default as ThemeController } from "./ThemeController";
 export { default as TodoCard } from "./TodoCard";
+export { default as QuizCategoryBadge } from "./QuizCategoryBadge";

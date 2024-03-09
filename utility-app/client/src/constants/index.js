@@ -3,11 +3,14 @@ import {
   ColorPalettePage,
   HomePage,
   NotesPage,
+  QuizPage,
   QuotesPage,
   TodosPage,
 } from "../pages";
 import { PATHS } from "../routes/paths";
 import { nanoid } from "nanoid";
+export const QUIZ_API_TOKEN = "lIJa0rcKPIkkG55PQCaADon5LxXGTG3inCN3KclD";
+export const QUIZ_API_ENDPOINT = "https://quizapi.io/api/v1/questions?";
 export const GOOGLE_BOOKS_API_KEY = "AIzaSyAJdR8sRchyQjOKgRD0AG_WRODXezzeGy0";
 export const GOOGLE_BOOKS_API_ENDPOINT =
   "https://www.googleapis.com/books/v1/volumes?";
@@ -46,6 +49,12 @@ export const RoutesArray = [
     path: PATHS.quotes,
     Element: QuotesPage,
   },
+  {
+    key: nanoid(),
+    path: PATHS.quiz,
+    Element: QuizPage,
+  },
+
   // {
   //   key: nanoid(),
   //   path: PATHS.pomodoros,
@@ -91,6 +100,10 @@ export const SIDEBAR_MAPPING = [
         name: "Quotes",
         path: PATHS.quotes,
       },
+      {
+        name: "Quiz",
+        path: PATHS.quiz,
+      },
     ],
   },
 ];
@@ -125,4 +138,32 @@ export const HOMEPAGE_CARD_MAPPING = [
     title: "Quotes",
     color: "bg-error",
   },
+];
+
+export const QUIZ_CATEGORY_MAPPING = [
+  {
+    categoryName: "linux",
+    backgroundColor: "btn-primary",
+  },
+  {
+    categoryName: "devOps",
+    backgroundColor: "btn-secondary",
+  },
+  {
+    categoryName: "bash",
+    backgroundColor: "btn-accecnt",
+  },
+  // {
+  //   categoryName: "terminal",
+  //   backgroundColor: "btn-neutral",
+  // },
+
+  {
+    categoryName: "docker",
+    backgroundColor: "btn-success",
+  },
+  // {
+  //   categoryName: "kubernetes",
+  //   backgroundColor: "btn-warning",
+  // },
 ];

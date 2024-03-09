@@ -9,4 +9,5 @@ export const PATHS = {
   colorPicker: "/color-picker",
   books: "/books",
   quotes: "/quotes",
+  quiz: "/quiz",
 };

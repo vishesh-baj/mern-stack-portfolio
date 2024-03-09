@@ -1,0 +1,57 @@
+import SectionLayout from "../layout/SectionLayout";
+import axios from "axios";
+import {
+  QUIZ_API_ENDPOINT,
+  QUIZ_API_TOKEN,
+  QUIZ_CATEGORY_MAPPING,
+} from "../constants";
+import { useMutation } from "react-query";
+import { Loader, QuizCategoryBadge } from "../components";
+import { nanoid } from "nanoid";
+import toast from "react-hot-toast";
+const QuizPage = () => {
+  const LIMIT = 10;
+
+  const quizMutation = useMutation(
+    (data) =>
+      axios.get(
+        `${data.QUIZ_API_ENDPOINT}apiKey=${data.QUIZ_API_TOKEN}&limit=${data.LIMIT}&category=${data.categoryName}`
+      ),
+    {
+      onSuccess: (data) => console.log("FETCHED QUIZ DATA: ", data.data),
+      onError: (error) => toast.error(error.message),
+    }
+  );
+
+  const handleSelectCategory = (selectedCategory) => {
+    quizMutation.mutate({
+      QUIZ_API_ENDPOINT,
+      QUIZ_API_TOKEN,
+      LIMIT,
+      categoryName: selectedCategory.categoryName,
+    });
+  };
+
+  return (
+    <SectionLayout sectionTitle="Quiz">
+      {
+        <>
+          <h2 className="my-4">Select Category</h2>
+          <div className="flex gap-2 flex-wrap">
+            {QUIZ_CATEGORY_MAPPING.map((quizBadge) => {
+              return (
+                <QuizCategoryBadge
+                  key={nanoid()}
+                  badgeData={quizBadge}
+                  handleSelectCategory={handleSelectCategory}
+                />
+              );
+            })}
+          </div>
+        </>
+      }
+    </SectionLayout>
+  );
+};
+
+export default QuizPage;

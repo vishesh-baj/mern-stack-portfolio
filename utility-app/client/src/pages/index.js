@@ -9,3 +9,4 @@ export { default as ColorPalettePage } from "./ColorPalettePage";
 export { default as PageNotFound } from "./PageNotFound";
 export { default as BooksPage } from "./BooksPage";
 export { default as QuotesPage } from "./QuotesPage";
+export { default as QuizPage } from "./QuizPage";

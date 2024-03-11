@@ -23,10 +23,10 @@ const LoginPage = () => {
       onSuccess: (data) => {
         dispatch(setUser(data.data?.username));
         dispatch(setToken(data.data?.token));
-        toast.success(data.data?.message);
         localStorage.setItem("token", data?.data?.token);
         localStorage.setItem("username", data.data?.username);
         navigate(PATHS.home);
+        toast.success(data.data?.message);
       },
       onError: (error) => {
         console.log(error);

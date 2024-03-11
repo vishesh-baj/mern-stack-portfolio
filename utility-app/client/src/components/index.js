@@ -16,3 +16,4 @@ export { default as Sidebar } from "./Sidebar";
 export { default as ThemeController } from "./ThemeController";
 export { default as TodoCard } from "./TodoCard";
 export { default as QuizCategoryBadge } from "./QuizCategoryBadge";
+export { default as QuizQuestionCard } from "./QuizQuestionCard";

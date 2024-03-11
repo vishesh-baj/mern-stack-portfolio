@@ -12,6 +12,8 @@ import toast from "react-hot-toast";
 import { useState } from "react";
 const QuizPage = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [quizData, setQuizData] = useState([]);
+  const [quizStarted, setQuizStarted] = useState(false);
   const LIMIT = 10;
 
   const quizMutation = useMutation(
@@ -20,7 +22,10 @@ const QuizPage = () => {
         `${data.QUIZ_API_ENDPOINT}apiKey=${data.QUIZ_API_TOKEN}&limit=${data.LIMIT}&category=${data.categoryName}`
       ),
     {
-      onSuccess: (data) => console.log("FETCHED QUIZ DATA: ", data.data),
+      onSuccess: (data) => {
+        console.log("DATA: ", data.data);
+        setQuizData(data.data);
+      },
       onError: (error) => toast.error(error.message),
     }
   );
@@ -36,7 +41,9 @@ const QuizPage = () => {
       LIMIT,
       categoryName: selectedCategory.categoryName,
     });
+    setQuizStarted((prevState) => !prevState);
   };
+
   return (
     <SectionLayout sectionTitle="Quiz">
       {
@@ -54,12 +61,24 @@ const QuizPage = () => {
             })}
           </div>
           <div className="w-full flex ">
-            <button
-              onClick={handleStartQuiz}
-              className="btn-wide flex-1 btn btn-accent mt-4"
-            >
-              Start Quiz
-            </button>
+            {quizStarted ? (
+              <div>
+                {quizData.map((questionData) => {
+                  return (
+                    <div key={questionData.id}>
+                      <h2>{questionData.question}</h2>
+                    </div>
+                  );
+                })}
+              </div>
+            ) : (
+              <button
+                onClick={handleStartQuiz}
+                className="btn-wide flex-1 btn btn-accent mt-4"
+              >
+                Start Quiz
+              </button>
+            )}
           </div>
         </>
       }

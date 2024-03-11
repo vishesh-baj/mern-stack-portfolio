@@ -6,7 +6,7 @@ import {
   QUIZ_CATEGORY_MAPPING,
 } from "../constants";
 import { useMutation } from "react-query";
-import { QuizCategoryBadge } from "../components";
+import { QuizCategoryBadge, QuizQuestionCard } from "../components";
 import { nanoid } from "nanoid";
 import toast from "react-hot-toast";
 import { useState } from "react";
@@ -63,10 +63,10 @@ const QuizPage = () => {
           <div className="w-full flex ">
             {quizStarted ? (
               <div>
-                {quizData.map((questionData) => {
+                {quizData.map((questionData, idx) => {
                   return (
                     <div key={questionData.id}>
-                      <h2>{questionData.question}</h2>
+                      <QuizQuestionCard data={questionData} index={idx + 1} />
                     </div>
                   );
                 })}

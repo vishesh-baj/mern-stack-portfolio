@@ -10,6 +10,8 @@ import { QuizCategoryBadge, QuizQuestionCard } from "../components";
 import { nanoid } from "nanoid";
 import toast from "react-hot-toast";
 import { useState } from "react";
+import { GrPowerReset } from "react-icons/gr";
+
 const QuizPage = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [quizData, setQuizData] = useState([]);
@@ -59,13 +61,21 @@ const QuizPage = () => {
                 />
               );
             })}
+            <div className="tooltip" data-tip="reset">
+              <button
+                onClick={() => setQuizStarted(false)}
+                className="btn btn-circle"
+              >
+                <GrPowerReset />
+              </button>
+            </div>
           </div>
-          <div className="w-full flex ">
+          <div className="w-full flex mt-4 ">
             {quizStarted ? (
-              <div>
+              <div className="w-full ">
                 {quizData.map((questionData, idx) => {
                   return (
-                    <div key={questionData.id}>
+                    <div className="mb-4" key={questionData.id}>
                       <QuizQuestionCard data={questionData} index={idx + 1} />
                     </div>
                   );

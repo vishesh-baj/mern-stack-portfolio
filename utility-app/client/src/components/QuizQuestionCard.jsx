@@ -1,13 +1,37 @@
+import { nanoid } from "nanoid";
 import PropTypes from "prop-types";
+
 const QuizQuestionCard = ({ data, index }) => {
   const { question, answers, description, correct_answer, tags } = data;
+  console.log(correct_answer);
+
   return (
     <div className="bg-base-200 rounded-xl w-full p-4">
-      <h1 className="text-xl">
+      <h1 className="text-xl flex gap-4">
         <span>{index}. </span>
-        {question}
+        <p>{question}</p>
       </h1>
-      <div>{console.log(Object.entries(answers))}</div>
+      <div>
+        {Object.entries(answers).map((item) => {
+          return (
+            item[1] !== null && (
+              <div className="mt-4" key={nanoid()}>
+                <div className="flex gap-4">
+                  <input
+                    className="radio radio-primary"
+                    type="radio"
+                    id={`radio_${nanoid()}`} // Use a unique id for each radio input
+                    name={`question_${index}`} // Use a unique name for each set of radio inputs
+                  />
+                  <label htmlFor={`radio_${nanoid()}`}>
+                    {item[0].split("_")[1]}: {item[1]}
+                  </label>
+                </div>
+              </div>
+            )
+          );
+        })}
+      </div>
     </div>
   );
 };

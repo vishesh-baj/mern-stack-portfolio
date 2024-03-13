@@ -9,7 +9,7 @@ import { useMutation } from "react-query";
 import { QuizCategoryBadge, QuizQuestionCard } from "../components";
 import { nanoid } from "nanoid";
 import toast from "react-hot-toast";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { GrPowerReset } from "react-icons/gr";
 
 const QuizPage = () => {
@@ -18,7 +18,6 @@ const QuizPage = () => {
   const [quizStarted, setQuizStarted] = useState(false);
   const [correctAnswers, setCorrectAnswers] = useState([]);
   const [selectedAnswers, setSelectedAnswers] = useState([]);
-  const [marks, setMarks] = useState(0);
 
   const LIMIT = 10;
 
@@ -72,19 +71,26 @@ const QuizPage = () => {
   };
 
   const handleSubmit = () => {
+    let marks = 0;
     console.log("SUBMIT TRIGGERED");
     correctAnswers.forEach((answerArr, idx) => {
+      console.log(answerArr[0][0].split("_"));
       if (
         answerArr[0][0].split("_")[1] ===
         selectedAnswers[idx]["answer"].split("_")[2]
       ) {
-        setMarks((prevMarks) => prevMarks + 1);
+        marks++;
       } else {
         return;
       }
     });
-    toast.success(`TOTAL MARKS OBTAINED: ${marks} `);
+    toast.success(`TOTAL MARKS OBTAINED: ${marks}/${correctAnswers.length}`);
   };
+
+  useEffect(() => {
+    console.log("SELECTED ANSWERS: ", selectedAnswers);
+    console.log("CORRECT ANSWERS: ", correctAnswers);
+  }, [correctAnswers, selectedAnswers]);
 
   return (
     <SectionLayout sectionTitle="Quiz">

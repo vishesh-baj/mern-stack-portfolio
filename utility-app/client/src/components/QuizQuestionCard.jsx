@@ -4,6 +4,11 @@ import PropTypes from "prop-types";
 const QuizQuestionCard = ({ data, index }) => {
   const { question, answers, description, correct_answer, tags } = data;
   console.log(correct_answer);
+  const handleChange = (event) => {
+    const { name } = event;
+
+    console.log("AWesome ", name);
+  };
 
   return (
     <div className="bg-base-200 rounded-xl w-full p-4">
@@ -18,10 +23,11 @@ const QuizQuestionCard = ({ data, index }) => {
               <div className="mt-4" key={nanoid()}>
                 <div className="flex gap-4">
                   <input
+                    onChange={(e) => handleChange(e.target)}
                     className="radio radio-primary"
                     type="radio"
                     id={`radio_${nanoid()}`} // Use a unique id for each radio input
-                    name={`question_${index}`} // Use a unique name for each set of radio inputs
+                    name={`question_${index}_answer_${item[0].split("_")[1]}`} // Use a unique name for each set of radio inputs
                   />
                   <label htmlFor={`radio_${nanoid()}`}>
                     {item[0].split("_")[1]}: {item[1]}

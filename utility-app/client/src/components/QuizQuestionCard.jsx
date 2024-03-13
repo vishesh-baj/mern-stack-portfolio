@@ -1,14 +1,11 @@
 import { nanoid } from "nanoid";
 import PropTypes from "prop-types";
+import { useState } from "react";
 
-const QuizQuestionCard = ({ data, index }) => {
-  const { question, answers, description, correct_answer, tags } = data;
-  console.log(correct_answer);
-  const handleChange = (event) => {
-    const { name } = event;
+const QuizQuestionCard = ({ data, index, changeHandler }) => {
+  const { question, answers, tags } = data;
 
-    console.log("AWesome ", name);
-  };
+  const [selectedAnswer, setSelectedAnswer] = useState(null);
 
   return (
     <div className="bg-base-200 rounded-xl w-full p-4">
@@ -23,13 +20,17 @@ const QuizQuestionCard = ({ data, index }) => {
               <div className="mt-4" key={nanoid()}>
                 <div className="flex gap-4">
                   <input
-                    onChange={(e) => handleChange(e.target)}
+                    onChange={(e) => {
+                      setSelectedAnswer(item[0]);
+                      changeHandler(e.target);
+                    }}
                     className="radio radio-primary"
                     type="radio"
-                    id={`radio_${nanoid()}`} // Use a unique id for each radio input
-                    name={`question_${index}_answer_${item[0].split("_")[1]}`} // Use a unique name for each set of radio inputs
+                    id={`radio_${item[0]}`}
+                    name={`question_${index}_answer`}
+                    checked={selectedAnswer === item[0]}
                   />
-                  <label htmlFor={`radio_${nanoid()}`}>
+                  <label htmlFor={`radio_${item[0]}`}>
                     {item[0].split("_")[1]}: {item[1]}
                   </label>
                 </div>
@@ -56,6 +57,7 @@ QuizQuestionCard.propTypes = {
     ),
   }),
   index: PropTypes.number.isRequired,
+  changeHandler: PropTypes.func.isRequired,
 };
 
 export default QuizQuestionCard;

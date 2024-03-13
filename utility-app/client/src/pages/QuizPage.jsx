@@ -9,7 +9,7 @@ import { useMutation } from "react-query";
 import { QuizCategoryBadge, QuizQuestionCard } from "../components";
 import { nanoid } from "nanoid";
 import toast from "react-hot-toast";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { GrPowerReset } from "react-icons/gr";
 
 const QuizPage = () => {
@@ -58,7 +58,6 @@ const QuizPage = () => {
   };
 
   const handleSelectedAnswers = (answerData) => {
-    console.log(answerData);
     setSelectedAnswers((prevState) => {
       const existingAnswerIndex = prevState.findIndex(
         (obj) => obj.name === answerData.name
@@ -86,11 +85,6 @@ const QuizPage = () => {
     });
     toast.success(`TOTAL MARKS OBTAINED: ${marks} `);
   };
-
-  useEffect(() => {
-    console.log("CORRECT ANSWERS: ", correctAnswers);
-    console.log("SELECTED ANSWERS: ", selectedAnswers);
-  }, [correctAnswers, selectedAnswers]);
 
   return (
     <SectionLayout sectionTitle="Quiz">

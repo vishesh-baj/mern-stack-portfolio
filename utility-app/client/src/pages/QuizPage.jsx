@@ -13,6 +13,7 @@ import { useState, useEffect } from "react";
 import { GrPowerReset } from "react-icons/gr";
 
 const QuizPage = () => {
+  const [activeTab, setActiveTab] = useState("play-quiz");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [quizData, setQuizData] = useState([]);
   const [quizStarted, setQuizStarted] = useState(false);
@@ -53,6 +54,7 @@ const QuizPage = () => {
       LIMIT,
       categoryName: selectedCategory.categoryName,
     });
+
     setQuizStarted((prevState) => !prevState);
   };
 
@@ -96,52 +98,90 @@ const QuizPage = () => {
     <SectionLayout sectionTitle="Quiz">
       {
         <>
-          <h2 className="my-4">Select Category</h2>
-          <div className="flex gap-2 flex-wrap">
-            {QUIZ_CATEGORY_MAPPING.map((quizBadge) => {
-              return (
-                <QuizCategoryBadge
-                  key={nanoid()}
-                  badgeData={quizBadge}
-                  handleSelectCategory={handleSelectCategory}
-                />
-              );
-            })}
-            <div className="tooltip" data-tip="reset">
-              <button
-                onClick={() => setQuizStarted(false)}
-                className="btn btn-circle"
-              >
-                <GrPowerReset />
-              </button>
-            </div>
-          </div>
-          <div className="w-full flex mt-4 ">
-            {quizStarted ? (
-              <div className="w-full ">
-                {quizData.map((questionData, idx) => {
+          <div role="tablist" className="tabs tabs-lifted mt-4">
+            <input
+              type="radio"
+              name="Play Quiz"
+              role="tab"
+              className="tab"
+              aria-label="Play Quiz"
+              onClick={() => setActiveTab("play-quiz")}
+              checked={activeTab === "play-quiz"}
+            />
+            <div
+              role="tabpanel"
+              className="tab-content bg-base-100 border-base-300 rounded-box p-6"
+            >
+              <h2 className="my-4">Select Category</h2>
+              <div className="flex gap-2 flex-wrap">
+                {QUIZ_CATEGORY_MAPPING.map((quizBadge) => {
                   return (
-                    <div className="mb-4" key={questionData.id}>
-                      <QuizQuestionCard
-                        changeHandler={handleSelectedAnswers}
-                        data={questionData}
-                        index={idx + 1}
-                      />
-                    </div>
+                    <QuizCategoryBadge
+                      key={nanoid()}
+                      badgeData={quizBadge}
+                      handleSelectCategory={handleSelectCategory}
+                    />
                   );
                 })}
-                <button onClick={handleSubmit} className="btn">
-                  Submit
-                </button>
+                <div className="tooltip" data-tip="reset">
+                  <button
+                    onClick={() => setQuizStarted(false)}
+                    className="btn btn-circle"
+                  >
+                    <GrPowerReset />
+                  </button>
+                </div>
               </div>
-            ) : (
-              <button
-                onClick={handleStartQuiz}
-                className="btn-wide flex-1 btn btn-accent mt-4"
-              >
-                Start Quiz
-              </button>
-            )}
+              <div className="w-full flex mt-4 ">
+                {quizStarted ? (
+                  <div className="w-full ">
+                    {quizData.map((questionData, idx) => {
+                      return (
+                        <div className="mb-4" key={questionData.id}>
+                          <QuizQuestionCard
+                            changeHandler={handleSelectedAnswers}
+                            data={questionData}
+                            index={idx + 1}
+                          />
+                        </div>
+                      );
+                    })}
+                    <button
+                      disabled={
+                        selectedAnswers.length !== correctAnswers.length
+                      }
+                      onClick={handleSubmit}
+                      className="btn"
+                    >
+                      Submit
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    onClick={handleStartQuiz}
+                    className="btn-wide flex-1 btn btn-accent mt-4"
+                  >
+                    Start Quiz
+                  </button>
+                )}
+              </div>
+            </div>
+
+            <input
+              type="radio"
+              name="Quiz Logs"
+              role="tab"
+              className="tab"
+              aria-label="Quiz Logs"
+              onClick={() => setActiveTab("logs")}
+              checked={activeTab === "logs"}
+            />
+            <div
+              role="tabpanel"
+              className="tab-content bg-base-100 border-base-300 rounded-box p-6"
+            >
+              Tab content 2
+            </div>
           </div>
         </>
       }

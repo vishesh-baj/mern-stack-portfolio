@@ -87,6 +87,7 @@ const QuizPage = () => {
       }
     });
     toast.success(`TOTAL MARKS OBTAINED: ${marks}/${correctAnswers.length}`);
+    // send api call to sdave the quiz data
   };
 
   useEffect(() => {

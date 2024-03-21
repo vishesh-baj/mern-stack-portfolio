@@ -1,4 +1,5 @@
 import Quiz from "../schema/quiz.js";
+
 export const getAllQuiz = async (req, res) => {
   try {
   } catch (error) {

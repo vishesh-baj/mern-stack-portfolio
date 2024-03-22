@@ -6,6 +6,7 @@ const bookSchema = mongoose.Schema({
   description: { type: String, required: true, default: "" },
   rating: { type: Number, required: true, default: 0 },
   imageUrl: { type: String, required: true, default: "" },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "user", required: true },
 });
 
 const BookModel = mongoose.model("Book", bookSchema);

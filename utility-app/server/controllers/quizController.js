@@ -22,3 +22,17 @@ export const addQuiz = async (req, res) => {
     res.status(400).json({ error: error.message, message: "error occured" });
   }
 };
+
+export const deleteQuiz = async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const deletedQuiz = await Quiz.findByIdAndDelete(id);
+    if (!deletedQuiz) {
+      throw Error("No such quiz found");
+    }
+    res.status(200).json({ message: "Deletion Successful" });
+  } catch (error) {
+    res.status(400).json({ error: error.message, message: "error occured" });
+  }
+};
